@@ -1,4 +1,4 @@
-package acid.istts.parkremobile
+package acid.istts.parkremobile.activities
 
 import acid.istts.parkremobile.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
