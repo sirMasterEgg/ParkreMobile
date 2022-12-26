@@ -1,11 +1,12 @@
 package acid.istts.parkremobile.services
 
-import acid.istts.parkremobile.repositories.CustomerRepository
-import acid.istts.parkremobile.repositories.MallRepository
-import acid.istts.parkremobile.repositories.SegmentationRepository
-import acid.istts.parkremobile.repositories.StaffRepository
+import acid.istts.parkremobile.datasources.*
+import acid.istts.parkremobile.interfaces.CustomerDAO
+import acid.istts.parkremobile.repositories.*
 
 class ServiceLocator {
+    private val _baseUrl = "http://masteregg.ninja/api"
+
     companion object {
         private var instance: ServiceLocator? = null
         fun getInstance(): ServiceLocator {
@@ -17,18 +18,56 @@ class ServiceLocator {
     }
 
     fun getStaffRepository(): StaffRepository {
-        return StaffRepository.getInstance()
+        return StaffRepository.getInstance(
+            StaffDataSource.getInstance(_baseUrl)
+        )
     }
 
     fun getCustomerRepository(): CustomerRepository {
-        return CustomerRepository.getInstance()
+        return CustomerRepository.getInstance(
+            CustomerDataSource.getInstance(_baseUrl)
+        )
     }
 
     fun getMallRepository(): MallRepository {
-        return MallRepository.getInstance()
+        return MallRepository.getInstance(
+            MallDataSource.getInstance(_baseUrl)
+        )
     }
 
     fun getSegmentationRepository(): SegmentationRepository {
-        return SegmentationRepository.getInstance()
+        return SegmentationRepository.getInstance(
+            SegmentationDataSource.getInstance(_baseUrl)
+        )
+    }
+
+    fun getJobRepository(): JobRepository {
+        return JobRepository.getInstance(
+            JobDataSource.getInstance(_baseUrl)
+        )
+    }
+
+    fun getReservationRepository(): ReservationRepository {
+        return ReservationRepository.getInstance(
+            ReservationDataSource.getInstance(_baseUrl)
+        )
+    }
+
+    fun getReviewRepository(): ReviewRepository {
+        return ReviewRepository.getInstance(
+            ReviewDataSource.getInstance(_baseUrl)
+        )
+    }
+
+    fun getTransactionRepository(): TransactionRepository {
+        return TransactionRepository.getInstance(
+            TransactionDataSource.getInstance(_baseUrl)
+        )
+    }
+
+    fun getVehicleRepository(): VehicleRepository {
+        return VehicleRepository.getInstance(
+            VehicleDataSource.getInstance(_baseUrl)
+        )
     }
 }
