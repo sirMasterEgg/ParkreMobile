@@ -1,4 +1,11 @@
 package acid.istts.parkremobile.models
 
-class Job {
+class Job (
+    var id: Int,
+    var title: String,
+    var staff_id: Int,
+    var mall_id: Int,
+    var start_date: String,
+    var end_date: String,
+){
 }
