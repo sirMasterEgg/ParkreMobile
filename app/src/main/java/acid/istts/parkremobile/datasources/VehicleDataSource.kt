@@ -33,4 +33,8 @@ class VehicleDataSource(private val BASE_URL : String) : VehicleDAO {
     override suspend fun updateVehicle(vehicle: Vehicle): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteVehicle(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

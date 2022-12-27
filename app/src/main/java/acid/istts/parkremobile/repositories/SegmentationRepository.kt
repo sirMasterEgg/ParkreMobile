@@ -30,4 +30,8 @@ class SegmentationRepository(private val segmentationDataSource: SegmentationDat
     override suspend fun updateSegmentation(segmentation: Segmentation): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteSegmentation(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

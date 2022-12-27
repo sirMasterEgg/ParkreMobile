@@ -34,4 +34,8 @@ class SegmentationDataSource(private val BASE_URL : String) : SegmentationDAO {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteSegmentation(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }

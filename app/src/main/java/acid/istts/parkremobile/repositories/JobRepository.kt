@@ -30,4 +30,8 @@ class JobRepository(private val jobDataSource: JobDataSource) : JobDAO {
     override suspend fun updateJob(job: Job): Boolean {
         return jobDataSource.updateJob(job)
     }
+
+    override suspend fun deleteJob(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

@@ -35,4 +35,8 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteCustomer(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }

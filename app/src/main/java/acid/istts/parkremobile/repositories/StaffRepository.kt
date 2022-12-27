@@ -30,4 +30,8 @@ class StaffRepository(private val staffDataSource: StaffDataSource) : StaffDAO {
     override suspend fun updateStaff(staff: Staff): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteStaff(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

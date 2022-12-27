@@ -32,4 +32,12 @@ class TransactionDataSource(private val BASE_URL : String) : TransactionDAO {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getTransactionsByCustomer(customerId: Int): List<Transaction> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTransactionsByMall(mallId: Int): List<Transaction> {
+        TODO("Not yet implemented")
+    }
+
 }

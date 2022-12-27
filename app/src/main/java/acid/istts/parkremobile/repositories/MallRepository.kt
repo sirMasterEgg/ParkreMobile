@@ -31,4 +31,8 @@ class MallRepository(private var mallDataSource: MallDataSource) : MallDAO {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteMall(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }
