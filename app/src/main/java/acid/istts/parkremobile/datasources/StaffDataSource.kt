@@ -34,4 +34,8 @@ class StaffDataSource(private val BASE_URL : String) : StaffDAO {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteStaff(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }

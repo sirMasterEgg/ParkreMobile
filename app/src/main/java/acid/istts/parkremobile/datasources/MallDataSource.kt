@@ -33,4 +33,8 @@ class MallDataSource(private val BASE_URL: String) : MallDAO {
     override suspend fun updateMall(mall: Mall): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteMall(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

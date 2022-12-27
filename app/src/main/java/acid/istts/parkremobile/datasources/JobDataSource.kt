@@ -33,4 +33,8 @@ class JobDataSource(private val BASE_URL : String) : JobDAO {
     override suspend fun updateJob(job: Job): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteJob(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

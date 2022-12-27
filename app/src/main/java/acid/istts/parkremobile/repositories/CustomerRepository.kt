@@ -30,4 +30,8 @@ class CustomerRepository(private var customerDataSource: CustomerDataSource) : C
     override suspend fun updateCustomer(customer: Customer): Boolean {
         return customerDataSource.updateCustomer(customer)
     }
+
+    override suspend fun deleteCustomer(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

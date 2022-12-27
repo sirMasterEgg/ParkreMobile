@@ -30,4 +30,8 @@ class VehicleRepository(private val vehicleDataSource: VehicleDataSource) : Vehi
     override suspend fun updateVehicle(vehicle: Vehicle): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteVehicle(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
 }

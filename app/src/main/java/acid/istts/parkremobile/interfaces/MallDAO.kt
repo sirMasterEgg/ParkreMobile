@@ -7,4 +7,5 @@ interface MallDAO {
     suspend fun getMall(id: Int): Mall?
     suspend fun createMall(mall: Mall): Boolean
     suspend fun updateMall(mall: Mall): Boolean
+    suspend fun deleteMall(id: Int): Boolean
 }
