@@ -7,5 +7,5 @@ interface JobDAO {
     suspend fun getJob(id: Int): Job?
     suspend fun createJob(job: Job): Boolean
     suspend fun updateJob(job: Job): Boolean
-    //TODO: deleteJob
+    suspend fun deleteJob(id: Int): Boolean
 }

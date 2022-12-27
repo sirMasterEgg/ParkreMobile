@@ -7,5 +7,5 @@ interface CustomerDAO {
     suspend fun fetchCustomers(): List<Customer>
     suspend fun createCustomer(customer: Customer): Boolean
     suspend fun updateCustomer(customer: Customer): Boolean
-    //TODO: deleteCustomer
+    suspend fun deleteCustomer(id: Int): Boolean
 }

@@ -7,5 +7,5 @@ interface VehicleDAO {
     suspend fun getVehicle(id: Int): Vehicle?
     suspend fun createVehicle(vehicle: Vehicle): Boolean
     suspend fun updateVehicle(vehicle: Vehicle): Boolean
-    //TODO: deleteVehicle
+    suspend fun deleteVehicle(id: Int): Boolean
 }
