@@ -1,15 +1,18 @@
-package acid.istts.parkremobile.repositories
+package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.datasources.MallDataSource
 import acid.istts.parkremobile.interfaces.MallDAO
 import acid.istts.parkremobile.models.Mall
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
-class MallRepository(private var mallDataSource: MallDataSource) : MallDAO {
+class MallDataSource(private val BASE_URL: String) : MallDAO {
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     companion object {
-        private var instance: MallRepository? = null
-        fun getInstance(mallDataSource: MallDataSource): MallRepository {
+        private var instance: MallDataSource? = null
+        fun getInstance(BASE_URL: String): MallDataSource {
             if (instance == null) {
-                instance = MallRepository(mallDataSource)
+                instance = MallDataSource(BASE_URL)
             }
             return instance!!
         }
@@ -34,5 +37,4 @@ class MallRepository(private var mallDataSource: MallDataSource) : MallDAO {
     override suspend fun deleteMall(id: Int): Boolean {
         TODO("Not yet implemented")
     }
-
 }

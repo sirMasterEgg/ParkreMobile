@@ -1,15 +1,18 @@
-package acid.istts.parkremobile.repositories
+package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.datasources.StaffDataSource
 import acid.istts.parkremobile.interfaces.StaffDAO
 import acid.istts.parkremobile.models.Staff
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
-class StaffRepository(private val staffDataSource: StaffDataSource) : StaffDAO {
+class StaffDataSource(private val BASE_URL : String) : StaffDAO {
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     companion object {
-        private var instance: StaffRepository? = null
-        fun getInstance(staffDataSource: StaffDataSource): StaffRepository {
+        private var instance : StaffDataSource? = null
+        fun getInstance(BASE_URL : String) : StaffDataSource {
             if (instance == null) {
-                instance = StaffRepository(staffDataSource)
+                instance = StaffDataSource(BASE_URL)
             }
             return instance!!
         }
@@ -34,4 +37,5 @@ class StaffRepository(private val staffDataSource: StaffDataSource) : StaffDAO {
     override suspend fun deleteStaff(id: Int): Boolean {
         TODO("Not yet implemented")
     }
+
 }

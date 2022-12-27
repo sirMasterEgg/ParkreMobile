@@ -1,15 +1,18 @@
-package acid.istts.parkremobile.repositories
+package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.datasources.ReservationDataSource
 import acid.istts.parkremobile.interfaces.ReservationDAO
 import acid.istts.parkremobile.models.Reservation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
-class ReservationRepository(private val reservationDataSource: ReservationDataSource) : ReservationDAO {
+class ReservationDataSource(private val BASE_URL : String) : ReservationDAO {
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     companion object {
-        private var instance: ReservationRepository? = null
-        fun getInstance(reservationDataSource: ReservationDataSource): ReservationRepository {
+        private var instance : ReservationDataSource? = null
+        fun getInstance(BASE_URL : String) : ReservationDataSource {
             if (instance == null) {
-                instance = ReservationRepository(reservationDataSource)
+                instance = ReservationDataSource(BASE_URL)
             }
             return instance!!
         }
@@ -30,4 +33,5 @@ class ReservationRepository(private val reservationDataSource: ReservationDataSo
     override suspend fun updateReservation(reservation: Reservation): Boolean {
         TODO("Not yet implemented")
     }
+
 }

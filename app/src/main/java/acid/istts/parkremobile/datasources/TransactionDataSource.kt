@@ -1,16 +1,16 @@
-package acid.istts.parkremobile.repositories
+package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.datasources.TransactionDataSource
 import acid.istts.parkremobile.interfaces.TransactionDAO
 import acid.istts.parkremobile.models.Transaction
 
-class TransactionRepository(private val transactionDataSource: TransactionDataSource) :
-    TransactionDAO {
+class TransactionDataSource(private val BASE_URL : String) : TransactionDAO {
+    private val ioScope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO)
+
     companion object {
-        private var instance: TransactionRepository? = null
-        fun getInstance(transactionDataSource: TransactionDataSource): TransactionRepository {
+        private var instance : TransactionDataSource? = null
+        fun getInstance(BASE_URL : String) : TransactionDataSource {
             if (instance == null) {
-                instance = TransactionRepository(transactionDataSource)
+                instance = TransactionDataSource(BASE_URL)
             }
             return instance!!
         }
@@ -39,4 +39,5 @@ class TransactionRepository(private val transactionDataSource: TransactionDataSo
     override suspend fun getTransactionsByMall(mallId: Int): List<Transaction> {
         TODO("Not yet implemented")
     }
+
 }

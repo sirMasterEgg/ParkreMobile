@@ -1,15 +1,18 @@
-package acid.istts.parkremobile.repositories
+package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.datasources.VehicleDataSource
 import acid.istts.parkremobile.interfaces.VehicleDAO
 import acid.istts.parkremobile.models.Vehicle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
-class VehicleRepository(private val vehicleDataSource: VehicleDataSource) : VehicleDAO {
+class VehicleDataSource(private val BASE_URL : String) : VehicleDAO {
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     companion object {
-        private var instance: VehicleRepository? = null
-        fun getInstance(vehicleDataSource: VehicleDataSource): VehicleRepository {
+        private var instance : VehicleDataSource? = null
+        fun getInstance(BASE_URL : String) : VehicleDataSource {
             if (instance == null) {
-                instance = VehicleRepository(vehicleDataSource)
+                instance = VehicleDataSource(BASE_URL)
             }
             return instance!!
         }

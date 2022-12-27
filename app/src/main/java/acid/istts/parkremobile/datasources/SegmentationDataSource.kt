@@ -1,15 +1,18 @@
-package acid.istts.parkremobile.repositories
+package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.datasources.SegmentationDataSource
 import acid.istts.parkremobile.interfaces.SegmentationDAO
 import acid.istts.parkremobile.models.Segmentation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
-class SegmentationRepository(private val segmentationDataSource: SegmentationDataSource) : SegmentationDAO {
+class SegmentationDataSource(private val BASE_URL : String) : SegmentationDAO {
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     companion object {
-        private var instance: SegmentationRepository? = null
-        fun getInstance(segmentationDataSource: SegmentationDataSource): SegmentationRepository {
+        private var instance : SegmentationDataSource? = null
+        fun getInstance(BASE_URL : String) : SegmentationDataSource {
             if (instance == null) {
-                instance = SegmentationRepository(segmentationDataSource)
+                instance = SegmentationDataSource(BASE_URL)
             }
             return instance!!
         }
@@ -34,4 +37,5 @@ class SegmentationRepository(private val segmentationDataSource: SegmentationDat
     override suspend fun deleteSegmentation(id: Int): Boolean {
         TODO("Not yet implemented")
     }
+
 }

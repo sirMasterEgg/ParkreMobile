@@ -1,4 +1,4 @@
-package acid.istts.parkremobile.activities
+package acid.istts.parkremobile.activities.shared
 
 import acid.istts.parkremobile.databinding.ActivityMainBinding
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +13,5 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.tv1.text = "ParkRe Mobile"
     }
 }
