@@ -7,5 +7,5 @@ interface SegmentationDAO{
     suspend fun getSegmentation(id: Int): Segmentation?
     suspend fun createSegmentation(segmentation: Segmentation): Boolean
     suspend fun updateSegmentation(segmentation: Segmentation): Boolean
-    //TODO: deleteSegmentation
+    suspend fun deleteSegmentation(id: Int): Boolean
 }

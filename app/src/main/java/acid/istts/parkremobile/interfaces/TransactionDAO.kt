@@ -7,5 +7,6 @@ interface TransactionDAO {
     suspend fun getTransaction(id: Int): Transaction?
     suspend fun createTransaction(transaction: Transaction): Boolean
     suspend fun updateTransaction(transaction: Transaction): Boolean
-    //TODO: deleteTransaction, getTransactionByCustomer, getTransactionByMall
+    suspend fun deleteTransaction(id: Int): Boolean
+    //TODO: getTransactionByCustomer, getTransactionByMall
 }

@@ -7,5 +7,5 @@ interface StaffDAO {
     suspend fun getStaff(id: Int): Staff?
     suspend fun createStaff(staff: Staff): Boolean
     suspend fun updateStaff(staff: Staff): Boolean
-    //TODO: deleteStaff
+    suspend fun deleteStaff(id: Int): Boolean
 }
