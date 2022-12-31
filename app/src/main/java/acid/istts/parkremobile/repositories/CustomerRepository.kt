@@ -3,6 +3,7 @@ package acid.istts.parkremobile.repositories
 import acid.istts.parkremobile.datasources.CustomerDataSource
 import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.models.Customer
+import com.android.volley.toolbox.StringRequest
 
 class CustomerRepository(private var customerDataSource: CustomerDataSource) : CustomerDAO {
     companion object {
@@ -33,5 +34,9 @@ class CustomerRepository(private var customerDataSource: CustomerDataSource) : C
 
     override suspend fun deleteCustomer(id: Int): Boolean {
         TODO("Not yet implemented")
+    }
+
+    override fun login(username: String, password: String, listener : (String) -> Unit): StringRequest {
+        return customerDataSource.login(username, password, listener)
     }
 }
