@@ -1,19 +1,14 @@
 package acid.istts.parkremobile.datasources
 
-import acid.istts.parkremobile.activities.shared.LoginActivity
 import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.models.Customer
-import android.view.View
-import com.android.volley.RequestQueue
+import android.util.Log
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import org.json.JSONArray
-import org.json.JSONObject
+import java.nio.charset.Charset
 
 class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
     private val ioScope = CoroutineScope(Dispatchers.IO)
@@ -49,21 +44,15 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
         TODO("Not yet implemented")
     }
 
-//    private var listener: ((String) -> Unit)? = null
-//    fun listener(listener: (String) -> Unit) {
-//        this.listener = listener
-//    }
-
-    override fun login(username: String, password: String,
-                       listener : (String) -> Unit,
-    ): StringRequest {
+    override fun login(username: String, password: String, onSuccess : (String) -> Unit): StringRequest {
         val strReq = object : StringRequest(
             Method.POST,
             BASE_URL + "login",
             Response.Listener {
-                listener.invoke(it) },
+                onSuccess.invoke(it)
+            },
             Response.ErrorListener {
-                println(it.message)
+                Log.e("Volley", String(it.networkResponse.data, Charsets.UTF_8))
             }
         ){
             override fun getParams(): MutableMap<String, String> {
@@ -73,16 +62,51 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
                 return params
             }
 
-            override fun getBody(): ByteArray? {
-                val body = java.util.HashMap<String, String>()
-                body["email"] = username
-                body["password"] = password
-                return (body as Map<*, *>?)?.let { JSONObject(it).toString().toByteArray() }
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Content-Type"] = "application/x-www-form-urlencoded"
+                return headers
+            }
+        }
+        return strReq
+    }
+
+    override fun register(
+        username: String,
+        password: String,
+        passwordConfirm: String,
+        name: String,
+        phone: String,
+        address: String?,
+        onSuccess: (String) -> Unit,
+        onError: (VolleyError) -> Unit
+    ): StringRequest {
+        val strReq = object : StringRequest(
+            Method.POST,
+            BASE_URL + "register",
+            Response.Listener {
+                onSuccess.invoke(it)
+            },
+            Response.ErrorListener {
+                onError.invoke(it)
+            }
+        ){
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["email"] = username
+                params["password"] = password
+                params["password_confirmation"] = passwordConfirm
+                params["name"] = name
+                params["phone"] = phone
+                params["address"] = address ?: ""
+                return params
             }
 
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
                 headers["Accept"] = "application/json"
+                headers["Content-Type"] = "application/x-www-form-urlencoded"
                 return headers
             }
         }
