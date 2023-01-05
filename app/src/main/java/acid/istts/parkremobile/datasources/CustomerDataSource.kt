@@ -23,7 +23,7 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
     }
 
     override suspend fun fetchCustomers(): List<Customer> {
-        //TODO: fetch customers from API
+
         return listOf()
     }
 
