@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.customer.CustomerHomeActivity"
+    android:background="#c4c4c4">
+
+    <FrameLayout
+        android:id="@+id/frameCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:fabCradleRoundedCornerRadius="50dp">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_menu"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="18dp"
+            app:itemIconTint="@color/bottom_item_background"
+            app:itemTextColor="@color/bottom_item_background"
+            app:itemBackground="@android:color/transparent"/>
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bottom_reserve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_location_on_24"
+        app:maxImageSize="50dp"
+        android:backgroundTint="@color/primary"
+        app:layout_anchor="@id/bottomAppBar"
+        android:contentDescription="@string/bottom_content_description" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
