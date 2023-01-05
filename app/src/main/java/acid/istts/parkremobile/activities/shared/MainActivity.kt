@@ -5,6 +5,7 @@ import acid.istts.parkremobile.databinding.ActivityMainBinding
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding1Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding2Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding3Fragment
+import acid.istts.parkremobile.services.AppDatabase
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var db: AppDatabase
     private var state = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        db = AppDatabase.build(this)
         OnBoarding1Fragment.newInstance().apply { swapToFrag(this) }
         binding.btnOnboarding.setOnClickListener{
         when (state) {

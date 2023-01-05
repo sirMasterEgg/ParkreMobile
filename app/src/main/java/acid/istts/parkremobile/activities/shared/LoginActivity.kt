@@ -68,5 +68,11 @@ class LoginActivity : AppCompatActivity() {
             queue.add(strReq)
 
         }
+
+        binding.btnRegisterLogin.setOnClickListener {
+            Intent(this@LoginActivity, RegisterActivity::class.java).apply {
+                startActivity(this@apply)
+            }
+        }
     }
 }

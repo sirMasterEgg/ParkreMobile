@@ -29,12 +29,12 @@ class RegisterActivity : AppCompatActivity() {
         val serviceLocator = ServiceLocator.getInstance()
 
         binding.btnRegister.setOnClickListener {
-            val email: String = "mbokmu@mail.com"
-            val password: String = "qwe"
-            val passwordConfirmation: String = "qwe"
-            val name: String = "MuhammadBokmu"
-            val phone: String = "081234567890"
-            val address: String = "Jl. Jalan"
+            val email = "mbokmu@mail.com"
+            val password= "qwe"
+            val passwordConfirmation = "qwe"
+            val name = "MuhammadBokmu"
+            val phone = "081234567890"
+            val address = "Jl. Jalan"
 
             val stringReq = serviceLocator.getCustomerRepository().register(email, password, passwordConfirmation, name, phone, address, onSuccess =  {
                 val obj = JSONObject(it)
