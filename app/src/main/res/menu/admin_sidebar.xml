@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/sidebar_home"
+            android:title="Home"/>
+        <item
+            android:id="@+id/sidebar_master_customer"
+            android:title="Master Customer"/>
+        <item
+        android:id="@+id/sidebar_master_staff"
+        android:title="Master Staff"/>
+        <item
+        android:id="@+id/sidebar_master_mall"
+        android:title="Master Mall"/>
+        <item
+        android:id="@+id/sidebar_master_announcement"
+        android:title="Master Announcement"/>
+        <item
+            android:id="@+id/sidebar_logout"
+            android:title="Logout"/>
+    </group>
+</menu>

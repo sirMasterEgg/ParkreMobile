@@ -3,9 +3,10 @@ package acid.istts.parkremobile.services
 import acid.istts.parkremobile.datasources.*
 import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.repositories.*
+import android.view.View
 
 class ServiceLocator {
-    private val _baseUrl = "http://masteregg.ninja/api"
+    private val _baseUrl = "https://parkre.loca.lt/api/"
 
     companion object {
         private var instance: ServiceLocator? = null

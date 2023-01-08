@@ -3,8 +3,16 @@
     <string name="onBoarding_1">Save time by finding out parking spaces that are available in your nearby area</string>
     <string name="onBoarding_2">Get to know real time parking spaces in a mall</string>
     <string name="onBoarding_3">Reserve a parking space to secure your lot in a mall you desired</string>
-    <string name="nav_open">Open navigation drawer</string>
-    <string name="nav_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="btnOnboarding">Start Now!</string>
+    <string name="bottom_home">Home</string>
+    <string name="bottom_search">Search</string>
+    <string name="bottom_vehicles">My Vehicles</string>
+    <string name="bottom_profile">Profile</string>
+    <string name="bottom_content_description">Reserve</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_open">Open navigation drawer</string>
+    <string name="nav_close">Close navigation drawer</string>
 </resources>
