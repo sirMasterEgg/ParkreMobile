@@ -3,6 +3,7 @@ package acid.istts.parkremobile.repositories
 import acid.istts.parkremobile.datasources.CustomerDataSource
 import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.models.Customer
+import android.content.Context
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 
@@ -21,8 +22,12 @@ class CustomerRepository(private var customerDataSource: CustomerDataSource) : C
         return customerDataSource.getCustomer(id)
     }
 
-    override suspend fun fetchCustomers(): List<Customer> {
-        return customerDataSource.fetchCustomers()
+    override fun fetchCustomers(
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ): List<Customer> {
+        return customerDataSource.fetchCustomers(onSuccess, onError, context)
     }
 
     override suspend fun createCustomer(customer: Customer): Boolean {
