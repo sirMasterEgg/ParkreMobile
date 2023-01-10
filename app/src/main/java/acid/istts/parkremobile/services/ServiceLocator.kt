@@ -5,11 +5,8 @@ import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.repositories.*
 
 class ServiceLocator {
-<<<<<<< Updated upstream
+
     private val _baseUrl = "http://masteregg.ninja/api"
-=======
-    private val _baseUrl = "https://parkre.loca.lt/api/"
->>>>>>> Stashed changes
 
     companion object {
         private var instance: ServiceLocator? = null

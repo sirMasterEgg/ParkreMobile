@@ -37,22 +37,6 @@ class admin_master_customer : AppCompatActivity() {
 
         binding.userList.adapter = userAdapter
 
-//        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                binding.searchView.clearFocus()
-//                if (user.contains(query)){
-//                    userAdapter.filter.filter(query)
-//                }
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(p0: String?): Boolean {
-//                userAdapter.filter.filter(newText)
-//                return false
-//            }
-//
-//        })
-
         setSupportActionBar(toolbar)
 
         navigationView.bringToFront()
