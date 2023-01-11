@@ -7,27 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
 import acid.istts.parkremobile.models.Customer
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "activeCustomer"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CustomerHomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val ARG_PARAM1 = "customer"
+
 class CustomerHomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: Customer? = null
-    private var param2: String? = null
+    private var customer: Customer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getParcelable(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            customer = it.getParcelable(ARG_PARAM1)
         }
     }
 
@@ -39,13 +31,20 @@ class CustomerHomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_customer_home, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val tvName: TextView = view.findViewById(R.id.tvNameHomeCustomer)
+        val rvAnnouncements: RecyclerView = view.findViewById(R.id.rvAnnouncementsHomeCustomer)
+        val rvReservations: RecyclerView = view.findViewById(R.id.rvReservationsHomeCustomer)
+
+        tvName.text = customer?.name
+    }
+
     companion object {
         @JvmStatic
-        fun newInstance(param1: Customer, param2: String) =
+        fun newInstance(customer: Customer) =
             CustomerHomeFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(ARG_PARAM1, customer)
                 }
             }
     }
