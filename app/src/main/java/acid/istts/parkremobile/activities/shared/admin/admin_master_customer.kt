@@ -1,57 +1,24 @@
 package acid.istts.parkremobile.activities.shared.admin
 
-import acid.istts.parkremobile.R
-import acid.istts.parkremobile.databinding.ActivityAdminMasterCustomerBinding
-import acid.istts.parkremobile.databinding.ActivityMainBinding
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.SearchView
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import acid.istts.parkremobile.R
 
-class admin_master_customer : AppCompatActivity() {
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navigationView: NavigationView
-    lateinit var toolbar: Toolbar
-    lateinit var binding : ActivityAdminMasterCustomerBinding
+class admin_master_customer : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_admin_master_customer)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.sidebar_view)
-        toolbar = findViewById(R.id.toolbar2)
-
-
-        binding = ActivityAdminMasterCustomerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val user = arrayOf("jason","victor","nich","lele","daniel","mikel","sinyo ganteng")
-        val userAdapter : ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_list_item_1,user)
-
-        binding.userList.adapter = userAdapter
-
-        setSupportActionBar(toolbar)
-
-        navigationView.bringToFront()
-        var toggle = ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
 
     }
 
-    override fun onBackPressed(){
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_admin_master_customer, container, false)
     }
 }

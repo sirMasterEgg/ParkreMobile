@@ -20,7 +20,11 @@ class main_admin : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     lateinit var fragment_main_admin1 : main_admin1
     lateinit var admin_master_announcement1 : admin_master_announcement1
-
+    lateinit var admin_master_customer : admin_master_customer
+    lateinit var admin_master_mall : admin_master_mall
+    lateinit var admin_master_staff : admin_master_staff
+    lateinit var admin_add_staff : admin_add_staff
+    lateinit var admin_add_announcement : admin_add_announcement
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,10 @@ class main_admin : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar2)
         fragment_main_admin1 = main_admin1()
         admin_master_announcement1 = admin_master_announcement1()
+        admin_master_customer = admin_master_customer()
+        admin_master_mall = admin_master_mall()
+        admin_add_staff = admin_add_staff()
+        admin_add_announcement = admin_add_announcement()
 
         setSupportActionBar(toolbar)
 
@@ -42,8 +50,10 @@ class main_admin : AppCompatActivity() {
 
         gantihalaman()
         gantihalamanannounce()
-
-
+        gantihalamancustomer()
+        gantihalamanmall()
+        gantihalamanaddstaff()
+        gantihalamanaddannouncement()
     }
 
     override fun onBackPressed(){
@@ -67,6 +77,34 @@ class main_admin : AppCompatActivity() {
         gantiframe.commit()
     }
 
+    fun gantihalamancustomer(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.admin_bagian_main,admin_master_customer)
+        gantiframe.commit()
+    }
 
+    fun gantihalamanmall(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.admin_bagian_main,admin_master_mall)
+        gantiframe.commit()
+    }
+
+    fun gantihalamanstaff(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.admin_bagian_main,admin_master_staff)
+        gantiframe.commit()
+    }
+
+    fun gantihalamanaddstaff(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.admin_bagian_main,admin_add_staff)
+        gantiframe.commit()
+    }
+
+    fun gantihalamanaddannouncement(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.admin_bagian_main,admin_add_announcement)
+        gantiframe.commit()
+    }
 
 }
