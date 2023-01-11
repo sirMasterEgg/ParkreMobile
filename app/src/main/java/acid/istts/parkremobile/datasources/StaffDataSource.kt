@@ -2,6 +2,7 @@ package acid.istts.parkremobile.datasources
 
 import acid.istts.parkremobile.interfaces.StaffDAO
 import acid.istts.parkremobile.models.Staff
+import com.android.volley.toolbox.StringRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -35,6 +36,14 @@ class StaffDataSource(private val BASE_URL : String) : StaffDAO {
     }
 
     override suspend fun deleteStaff(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun login(
+        username: String,
+        password: String,
+        onSuccess: (String) -> Unit
+    ): StringRequest {
         TODO("Not yet implemented")
     }
 

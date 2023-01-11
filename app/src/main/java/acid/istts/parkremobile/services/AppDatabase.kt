@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase
     UserEntity::class
 ], version = 1)
 abstract class AppDatabase: RoomDatabase() {
-    abstract val userDao: UserDAO
+    abstract val userDAO: UserDAO
 
     companion object {
         private var database: AppDatabase? = null

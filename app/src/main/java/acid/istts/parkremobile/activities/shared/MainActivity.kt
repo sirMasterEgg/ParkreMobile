@@ -1,19 +1,25 @@
 package acid.istts.parkremobile.activities.shared
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.activities.customer.CustomerHomeActivity
 import acid.istts.parkremobile.databinding.ActivityMainBinding
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding1Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding2Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding3Fragment
 import acid.istts.parkremobile.services.AppDatabase
+import acid.istts.parkremobile.services.ServiceLocator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var db: AppDatabase
+    private lateinit var ioScope : CoroutineScope
     private var state = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +29,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         db = AppDatabase.build(this)
+        // check if user has logged in
+        ioScope = CoroutineScope(Dispatchers.IO)
+        ioScope.launch {
+            if (db.userDAO.getDBId() != null){
+                val serviceLocator = ServiceLocator.getInstance()
+                val dbId = db.userDAO.getDBId()!!
+                when(db.userDAO.getRole()){
+                    1 -> {
+                        val customer = serviceLocator.getCustomerRepository().getCustomer(dbId)
+                        if (customer != null){
+                            val intent = Intent(this@MainActivity, CustomerHomeActivity::class.java)
+                            intent.putExtra("customer", customer)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                    2 ->{
+                        val admin = serviceLocator.getStaffRepository().getStaff(dbId)
+                    }
+                    3 ->{
+                        val staff = serviceLocator.getStaffRepository().getStaff(dbId)
+                    }
+                }
+            }
+
+        }
+
         OnBoarding1Fragment.newInstance().apply { swapToFrag(this) }
         binding.btnOnboarding.setOnClickListener{
         when (state) {

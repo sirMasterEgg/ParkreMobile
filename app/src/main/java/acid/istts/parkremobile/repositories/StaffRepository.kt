@@ -3,6 +3,7 @@ package acid.istts.parkremobile.repositories
 import acid.istts.parkremobile.datasources.StaffDataSource
 import acid.istts.parkremobile.interfaces.StaffDAO
 import acid.istts.parkremobile.models.Staff
+import com.android.volley.toolbox.StringRequest
 
 class StaffRepository(private val staffDataSource: StaffDataSource) : StaffDAO {
     companion object {
@@ -32,6 +33,14 @@ class StaffRepository(private val staffDataSource: StaffDataSource) : StaffDAO {
     }
 
     override suspend fun deleteStaff(id: Int): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun login(
+        username: String,
+        password: String,
+        onSuccess: (String) -> Unit
+    ): StringRequest {
         TODO("Not yet implemented")
     }
 }

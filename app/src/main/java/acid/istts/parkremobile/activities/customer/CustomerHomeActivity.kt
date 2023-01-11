@@ -26,6 +26,9 @@ class CustomerHomeActivity : AppCompatActivity() {
             "Random Street 123"
         )
 
+        // get customer
+        val customer = intent.getParcelableExtra<Customer>("customer")
+
         binding.bottomReserve.setOnClickListener {
             binding.bottomNavigationView.selectedItemId = R.id.bottom_home
             CustomerReserveFragment.newInstance("tes", "tes").apply {
@@ -39,7 +42,7 @@ class CustomerHomeActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.bottom_home -> {
-                    CustomerHomeFragment.newInstance(demoCustomer, "tes").apply {
+                    CustomerHomeFragment.newInstance(demoCustomer).apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
