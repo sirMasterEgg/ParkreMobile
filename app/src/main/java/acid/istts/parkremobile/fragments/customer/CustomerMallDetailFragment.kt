@@ -7,15 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
 import acid.istts.parkremobile.models.Customer
-import android.widget.Button
-import androidx.recyclerview.widget.RecyclerView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "customer"
-private const val ARG_PARAM2 = "param2"
 
-class CustomerVehiclesFragment : Fragment() {
+class CustomerMallDetailFragment : Fragment() {
     private var customer: Customer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,18 +24,13 @@ class CustomerVehiclesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_customer_vehicles, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val rvVehicles: RecyclerView = view.findViewById(R.id.rvVehicles)
-        val btnAdd: Button = view.findViewById(R.id.btnAddVehiclesCustomer)
+        return inflater.inflate(R.layout.fragment_customer_mall_detail, container, false)
     }
 
     companion object {
         @JvmStatic
         fun newInstance(customer: Customer) =
-            CustomerVehiclesFragment().apply {
+            CustomerMallDetailFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(ARG_PARAM1, customer)
                 }

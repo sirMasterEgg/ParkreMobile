@@ -10,15 +10,21 @@ interface UserDAO {
     @Insert
     suspend fun insert(user: UserEntity)
 
-    @Query("SELECT token FROM user WHERE id = :id")
-    suspend fun getToken(id: Int): String
+    @Query("SELECT COUNT(*) FROM user")
+    suspend fun getCount(): Int
 
-    @Query("SELECT role FROM user WHERE id = :id")
-    suspend fun getRole(id: Int): Int
+    @Query("SELECT db_id FROM user WHERE id = 1")
+    suspend fun getDBId(): Int?
 
-    @Query("UPDATE user SET token = :token, role = :role WHERE id = :id")
-    suspend fun setValues(id: Int, token: String, role: Int): Boolean
+    @Query("SELECT token FROM user WHERE id = 1")
+    suspend fun getToken(): String?
 
-    @Query("UPDATE user SET token = null, role = null WHERE id = :id")
-    suspend fun clear(id: Int): Boolean
+    @Query("SELECT role FROM user WHERE id = 1")
+    suspend fun getRole(): Int?
+
+    @Query("UPDATE user SET db_id = :db_id, token = :token, role = :role WHERE id = 1")
+    suspend fun setValues(db_id: Int, token: String, role: Int): Int
+
+    @Query("UPDATE user SET token = null, role = null WHERE 1")
+    suspend fun clear(): Int
 }

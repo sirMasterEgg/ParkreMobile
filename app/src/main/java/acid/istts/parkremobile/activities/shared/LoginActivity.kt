@@ -3,6 +3,9 @@ package acid.istts.parkremobile.activities.shared
 import acid.istts.parkremobile.activities.customer.CustomerHomeActivity
 import acid.istts.parkremobile.databinding.ActivityLoginBinding
 import acid.istts.parkremobile.models.Customer
+import acid.istts.parkremobile.models.Staff
+import acid.istts.parkremobile.models.UserEntity
+import acid.istts.parkremobile.services.AppDatabase
 import acid.istts.parkremobile.services.ServiceLocator
 import android.content.Intent
 import android.os.Bundle
@@ -26,46 +29,110 @@ class LoginActivity : AppCompatActivity() {
         val ioScope = CoroutineScope(Dispatchers.IO)
 
         val serviceLocator = ServiceLocator.getInstance()
-        var customer : Customer? = null
+        val db = AppDatabase.build(this)
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmailLogin.text.toString()
             val password = binding.etPasswordLogin.text.toString()
 
-            val strReq = serviceLocator.getCustomerRepository().login(email, password) {
-                val obj = JSONObject(it)
-                val status = obj.getString("status")
+            // log in as customer
+            if (email.contains("@")){
+                val strReq = serviceLocator.getCustomerRepository().login(email, password) {
+                    val obj = JSONObject(it)
+                    val status = obj.getString("status")
 
-                if (status == "success") {
-                    val token = obj.getString("token")
-                    val customerObj = obj.getJSONObject("data")
-                    customer = Customer(
-                        customerObj.getInt("id"),
-                        customerObj.getString("name"),
-                        customerObj.getString("email"),
-                        customerObj.getString("password"),
-                        customerObj.getString("phone"),
-                        customerObj.getString("address"),
-                    )
+                    var customer : Customer? = null
+                    if (status == "success") {
+                        val token = obj.getString("token")
+                        val customerObj = obj.getJSONObject("data")
+                        customer = Customer(
+                            id = customerObj.getInt("id"),
+                            name = customerObj.getString("name"),
+                            email = customerObj.getString("email"),
+                            password = customerObj.getString("password"),
+                            phone = customerObj.getString("phone"),
+                            address = customerObj.getString("address"),
+                        )
 
-                    ioScope.launch {
-                        //TODO: save token and customer data into database
+                        ioScope.launch {
+                            if(db.userDAO.getCount() == 0){
+                                db.userDAO.insert(
+                                    UserEntity(
+                                        db_id = customer.id,
+                                        token = token,
+                                        role = 1
+                                    )
+                                )
+                            } else {
+                                db.userDAO.setValues(customer.id, token, 1)
+                            }
+                        }
+
                     }
 
-                }
-
-                if (customer != null) {
-                    Intent(this@LoginActivity, CustomerHomeActivity::class.java).apply {
-                        startActivity(this@apply)
+                    if (customer != null) {
+                        val intent = Intent(this@LoginActivity, CustomerHomeActivity::class.java)
+                        intent.putExtra("customer", customer)
+                        startActivity(intent)
                         finish()
+                    } else {
+                        Toast.makeText(view.context, "User not Found!", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    Toast.makeText(view.context, "Login Failed!", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            val queue : RequestQueue = Volley.newRequestQueue(view.context)
-            queue.add(strReq)
+                val queue : RequestQueue = Volley.newRequestQueue(view.context)
+                queue.add(strReq)
+            }
+            // login as staff or admin
+            else{
+                val strReq = serviceLocator.getStaffRepository().login(email, password) {
+                    val obj = JSONObject(it)
+                    val status = obj.getString("status")
+
+                    var staff: Staff? = null
+                    if (status == "success") {
+                        val token = obj.getString("token")
+                        val staffObj = obj.getJSONObject("data")
+                        staff = Staff(
+                            id = staffObj.getInt("id"),
+                            username = staffObj.getString("username"),
+                            name = staffObj.getString("name"),
+                            password = staffObj.getString("password"),
+                            phone = staffObj.getString("phone"),
+                            address = staffObj.getString("address"),
+                            role_id = staffObj.getInt("role_id"),
+                        )
+
+                        ioScope.launch {
+                            if(db.userDAO.getCount() == 0){
+                                db.userDAO.insert(
+                                    UserEntity(
+                                        db_id = staff.id,
+                                        token = token,
+                                        role = 1
+                                    )
+                                )
+                            } else {
+                                db.userDAO.setValues(staff.id, token, 1)
+                            }
+                        }
+
+                    }
+
+                    if (staff != null) {
+//                        TODO: add staff to activity
+                        val intent = Intent(this@LoginActivity, CustomerHomeActivity::class.java)
+//                        intent.putExtra("customer", customer)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(view.context, "User not Found!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                val queue : RequestQueue = Volley.newRequestQueue(view.context)
+                queue.add(strReq)
+            }
 
         }
 
