@@ -5,5 +5,6 @@ class Review(
     var user_id: Int,
     var score: Int,
     var description: String,
+    var user_name: String
 ) {
 }
