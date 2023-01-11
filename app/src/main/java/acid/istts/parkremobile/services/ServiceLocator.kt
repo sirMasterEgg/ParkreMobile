@@ -18,6 +18,10 @@ class ServiceLocator {
         }
     }
 
+    fun getAnnouncementRepository(): AnnouncementRepository {
+        return AnnouncementRepository(AnnouncementDataSource(_baseUrl))
+    }
+
     fun getStaffRepository(): StaffRepository {
         return StaffRepository.getInstance(
             StaffDataSource.getInstance(_baseUrl)

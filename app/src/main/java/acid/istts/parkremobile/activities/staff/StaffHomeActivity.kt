@@ -4,12 +4,14 @@ import acid.istts.parkremobile.R
 import acid.istts.parkremobile.databinding.ActivityStaffHomeBinding
 import acid.istts.parkremobile.models.Announcement
 import acid.istts.parkremobile.models.Reservation
+import acid.istts.parkremobile.services.ServiceLocator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import org.json.JSONObject
 
 class StaffHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStaffHomeBinding
@@ -24,19 +26,33 @@ class StaffHomeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        annList.add(Announcement(1, "Announcement Pertama",
-            "Ini adalah Announcement Pertama", 1, 1, 1))
-        annList.add(Announcement(2, "Announcement Kedua",
-            "Ini adalah Announcement Kedua", 1, 1, 1))
-        annList.add(Announcement(3, "Announcement Ketiga",
-            "Ini adalah Announcement Ketiga", 1, 1, 1))
+       val serviceLocator = ServiceLocator.getInstance()
 
-        resList.add(Reservation(1, "22:10", "04.15", 1, 1, "2022-12-31", 1, 1, 1))
-        resList.add(Reservation(2, "22:10", "04.15", 1, 1, "2022-12-31", 1, 1, 1))
-        resList.add(Reservation(3, "22:10", "04.15", 1, 1, "2022-12-31", 1, 1, 1))
+        serviceLocator.getAnnouncementRepository().fetchAnnouncementByMallId(0, context = this, onSuccess = {
+            val obj = JSONObject(it)
+            val status = obj.getString("status")
+            val data = obj.getJSONArray("data")
 
-        annAdapter = AnnouncementAdapter(annList)
-        resAdapter = ReservationAdapter(resList)
+            if (status == "success") {
+                for (i in 0 until data.length()) {
+                    val ann = data.getJSONObject(i)
+                    val id = ann.getInt("id")
+                    val header = ann.getString("header")
+                    val content = ann.getString("content")
+                    val status = ann.getInt("status")
+                    val mall_id = ann.getInt("mall_id")
+                    val staff_id = ann.getInt("staff_id")
+                    val announcement = Announcement(id, header, content, status, mall_id, staff_id)
+                    annList.add(announcement)
+                }
+                annAdapter = AnnouncementAdapter(annList)
+                swapToFrag(AnnouncementFragment(annAdapter))
+            } else {
+                Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
+            }
+        }, onError = {
+            Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
+        })
 
         swapToFrag(HomeFragment(resAdapter))
 
