@@ -1,12 +1,13 @@
 package acid.istts.parkremobile.interfaces
 
 import acid.istts.parkremobile.models.Customer
+import android.content.Context
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 
 interface CustomerDAO {
     suspend fun getCustomer(id: Int): Customer?
-    suspend fun fetchCustomers(): List<Customer>
+    fun fetchCustomers(onSuccess: (String) -> Unit, onError: (String)->Unit, context: Context): List<Customer>
     suspend fun createCustomer(customer: Customer): Boolean
     suspend fun updateCustomer(customer: Customer): Boolean
     suspend fun deleteCustomer(id: Int): Boolean

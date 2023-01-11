@@ -1,5 +1,6 @@
 package acid.istts.parkremobile.interfaces
 
+
 import acid.istts.parkremobile.models.UserEntity
 import androidx.room.Dao
 import androidx.room.Insert

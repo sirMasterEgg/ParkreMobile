@@ -10,5 +10,6 @@ class Segmentation (
     var price: Int,
     var mall_id: Int,
     var image_url: String,
+    var mall_name: String
 ) {
 }

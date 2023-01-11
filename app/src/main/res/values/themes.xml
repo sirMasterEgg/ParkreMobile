@@ -14,6 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/ManropeTextViewStyle</item>
         <item name="android:buttonStyle">@style/ManropeButtonStyle</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ManropeTextViewStyle" parent="android:Widget.TextView">

@@ -5,6 +5,7 @@ class Vehicle(
     var name: String,
     var plate: String,
     var color: String,
-    var user_id: Int
+    var user_id: Int,
+    var user_name: String
 ) {
 }
