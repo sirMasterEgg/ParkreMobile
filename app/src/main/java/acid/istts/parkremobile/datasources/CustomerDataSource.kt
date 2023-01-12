@@ -95,7 +95,8 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
                 onSuccess.invoke(it)
             },
             Response.ErrorListener {
-                Log.e("Volley", String(it.networkResponse.data, Charsets.UTF_8))
+//                Log.e("Volley", String(it.networkResponse.data, Charsets.UTF_8))
+                println(String(it.networkResponse.data, Charsets.UTF_8))
             }
         ){
             override fun getParams(): MutableMap<String, String> {

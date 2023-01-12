@@ -20,7 +20,6 @@ private const val ARG_PARAM1 = "customer"
 class CustomerProfileFragment : Fragment() {
     private var customer: Customer? = null
     private val ioScope = CoroutineScope(Dispatchers.IO)
-    private val db: AppDatabase = AppDatabase.build(requireContext())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,7 @@ class CustomerProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val db: AppDatabase = AppDatabase.build(view.context)
         val btnEdit: Button = view.findViewById(R.id.btnEditProfileCustomer)
         val btnTransactions: Button = view.findViewById(R.id.btnReservationsProfileCustomer)
         val btnLogout: Button = view.findViewById(R.id.btnLogoutProfileCustomer)
