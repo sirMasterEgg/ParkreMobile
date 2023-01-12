@@ -25,6 +25,7 @@ class main_admin : AppCompatActivity() {
     lateinit var admin_master_staff : admin_master_staff
     lateinit var admin_add_staff : admin_add_staff
     lateinit var admin_add_announcement : admin_add_announcement
+    lateinit var admin_add_job : admin_add_job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ class main_admin : AppCompatActivity() {
         admin_master_mall = admin_master_mall()
         admin_add_staff = admin_add_staff()
         admin_add_announcement = admin_add_announcement()
+        admin_add_job = admin_add_job()
 
         setSupportActionBar(toolbar)
 
@@ -54,6 +56,7 @@ class main_admin : AppCompatActivity() {
         gantihalamanmall()
         gantihalamanaddstaff()
         gantihalamanaddannouncement()
+        gantihalamanaddjob()
     }
 
     override fun onBackPressed(){
@@ -104,6 +107,12 @@ class main_admin : AppCompatActivity() {
     fun gantihalamanaddannouncement(){
         val gantiframe = supportFragmentManager.beginTransaction()
         gantiframe.replace(R.id.admin_bagian_main,admin_add_announcement)
+        gantiframe.commit()
+    }
+
+    fun gantihalamanaddjob(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.admin_bagian_main,admin_add_job)
         gantiframe.commit()
     }
 
