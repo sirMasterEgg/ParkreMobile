@@ -52,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
                             password = customerObj.getString("password"),
                             phone = customerObj.getString("phone"),
                             address = customerObj.getString("address"),
+                            token = token
                         )
 
                         ioScope.launch {
@@ -101,6 +102,7 @@ class LoginActivity : AppCompatActivity() {
                             phone = staffObj.getString("phone"),
                             address = staffObj.getString("address"),
                             role_id = staffObj.getInt("role_id"),
+                            role_name = staffObj.getString("role_name"),
                         )
 
                         ioScope.launch {

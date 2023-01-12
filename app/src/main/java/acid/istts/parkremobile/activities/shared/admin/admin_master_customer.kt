@@ -67,8 +67,7 @@ class admin_master_customer : AppCompatActivity() {
 
             userAdapter.notifyDataSetChanged()
         }, onError = {
-            val message = JSONObject(it).getString("message")
-            Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
         })
 
 //        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

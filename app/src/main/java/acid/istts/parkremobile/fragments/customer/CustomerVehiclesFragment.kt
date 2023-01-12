@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "customer"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM2 = "addVehicle"
 
-class CustomerVehiclesFragment : Fragment() {
+class CustomerVehiclesFragment(
+    private val onAddClickListener: Unit
+) : Fragment() {
     private var customer: Customer? = null
+    private var addVehicle: Unit? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +38,19 @@ class CustomerVehiclesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val rvVehicles: RecyclerView = view.findViewById(R.id.rvVehicles)
         val btnAdd: Button = view.findViewById(R.id.btnAddVehiclesCustomer)
+
+        btnAdd.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameCustomer, CustomerAddVehicleFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(customer: Customer) =
-            CustomerVehiclesFragment().apply {
+        fun newInstance(customer: Customer, addClickListener: Unit) =
+            CustomerVehiclesFragment(addClickListener).apply {
                 arguments = Bundle().apply {
                     putParcelable(ARG_PARAM1, customer)
                 }

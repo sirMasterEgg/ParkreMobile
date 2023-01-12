@@ -18,13 +18,18 @@ class CustomerRepository(private var customerDataSource: CustomerDataSource) : C
         }
     }
 
-    override suspend fun getCustomer(id: Int): Customer? {
-        return customerDataSource.getCustomer(id)
+    override fun getCustomer(
+        id: Int,
+        onSuccess: (String) -> Unit,
+        onError: (VolleyError) -> Unit,
+        context: Context
+    ): Customer? {
+        return customerDataSource.getCustomer(id, onSuccess, onError, context)
     }
 
     override fun fetchCustomers(
         onSuccess: (String) -> Unit,
-        onError: (String) -> Unit,
+        onError: (VolleyError) -> Unit,
         context: Context
     ): List<Customer> {
         return customerDataSource.fetchCustomers(onSuccess, onError, context)

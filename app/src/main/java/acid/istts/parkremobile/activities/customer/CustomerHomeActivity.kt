@@ -17,18 +17,19 @@ class CustomerHomeActivity : AppCompatActivity() {
         setContentView(view)
 
         // demo customer
-        val demoCustomer = Customer(
-            99,
-            "John Doe",
-            "",
-            "johndoe@gmail.com",
-            "08123456789",
-            "Random Street 123"
-        )
+//        val customer = Customer(
+//            99,
+//            "John Doe",
+//            "",
+//            "johndoe@gmail.com",
+//            "08123456789",
+//            "Random Street 123"
+//        )
 
         // get customer
-        val customer = intent.getParcelableExtra<Customer>("customer")
+        val customer = intent.getParcelableExtra<Customer>("customer")!!
 
+        startCustomer(customer)
         binding.bottomReserve.setOnClickListener {
             binding.bottomNavigationView.selectedItemId = R.id.bottom_home
             CustomerReserveFragment.newInstance("tes", "tes").apply {
@@ -42,15 +43,15 @@ class CustomerHomeActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.bottom_home -> {
-                    CustomerHomeFragment.newInstance(demoCustomer).apply {
+                    CustomerHomeFragment.newInstance(customer).apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
                     }
                     true
                 }
-                R.id.bottom_search -> {
-                    CustomerSearchFragment.newInstance("tes", "tes").apply {
+                R.id.bottom_announcements -> {
+                    CustomerAnnouncementsFragment.newInstance("tes", "tes").apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
@@ -58,7 +59,7 @@ class CustomerHomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_vehicles -> {
-                    CustomerVehiclesFragment.newInstance("tes", "tes").apply {
+                    CustomerVehiclesFragment.newInstance(customer, addVehicleListener()).apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
@@ -66,7 +67,7 @@ class CustomerHomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_profile -> {
-                    CustomerProfileFragment.newInstance("tes", "tes").apply {
+                    CustomerProfileFragment.newInstance(customer).apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
@@ -75,6 +76,18 @@ class CustomerHomeActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+    }
+
+    private fun addVehicleListener(){
+
+    }
+
+    private fun startCustomer(customer: Customer){
+        CustomerHomeFragment.newInstance(customer).apply {
+            supportFragmentManager.beginTransaction()
+                .replace(binding.frameCustomer.id, this)
+                .commit()
         }
     }
 }

@@ -6,15 +6,18 @@ import acid.istts.parkremobile.databinding.ActivityMainBinding
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding1Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding2Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding3Fragment
+import acid.istts.parkremobile.models.Customer
 import acid.istts.parkremobile.services.AppDatabase
 import acid.istts.parkremobile.services.ServiceLocator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,7 +40,27 @@ class MainActivity : AppCompatActivity() {
                 val dbId = db.userDAO.getDBId()!!
                 when(db.userDAO.getRole()){
                     1 -> {
-                        val customer = serviceLocator.getCustomerRepository().getCustomer(dbId)
+                        val customer = serviceLocator.getCustomerRepository().getCustomer(id = dbId,
+                            onSuccess = {
+                                val customerObj = JSONObject(it).getJSONObject("data")
+                                val activeCustomer = Customer(
+                                    id = customerObj.getInt("id"),
+                                    name = customerObj.getString("name"),
+                                    email = customerObj.getString("email"),
+                                    password = customerObj.getString("password"),
+                                    phone = customerObj.getString("phone"),
+                                    address = customerObj.getString("address"),
+                                    token = customerObj.getString("token")
+                                )
+                                val intent = Intent(this@MainActivity, CustomerHomeActivity::class.java)
+                                intent.putExtra("customer", activeCustomer)
+                                startActivity(intent)
+                                finish()
+                            },
+                            onError = {
+                                Toast.makeText(this@MainActivity, "Error: $it", Toast.LENGTH_SHORT).show()
+                            },
+                            context = view.context)
                         if (customer != null){
                             val intent = Intent(this@MainActivity, CustomerHomeActivity::class.java)
                             intent.putExtra("customer", customer)

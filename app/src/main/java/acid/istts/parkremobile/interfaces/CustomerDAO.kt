@@ -6,8 +6,19 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 
 interface CustomerDAO {
-    suspend fun getCustomer(id: Int): Customer?
-    fun fetchCustomers(onSuccess: (String) -> Unit, onError: (String)->Unit, context: Context): List<Customer>
+
+    fun getCustomer(
+        id: Int,
+        onSuccess: (String) -> Unit,
+        onError: (VolleyError) -> Unit,
+        context: Context
+    ): Customer?
+    fun fetchCustomers(
+        onSuccess: (String) -> Unit,
+        onError: (VolleyError) -> Unit,
+        context: Context
+    ): List<Customer>
+
     suspend fun createCustomer(customer: Customer): Boolean
     suspend fun updateCustomer(customer: Customer): Boolean
     suspend fun deleteCustomer(id: Int): Boolean

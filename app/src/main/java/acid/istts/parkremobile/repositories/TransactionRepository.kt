@@ -32,7 +32,7 @@ class TransactionRepository(private val transactionDataSource: TransactionDataSo
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTransactionsByCustomer(customerId: Int): List<Transaction> {
+    override fun getTransactionsByCustomer(customerId: Int): List<Transaction> {
         TODO("Not yet implemented")
     }
 
