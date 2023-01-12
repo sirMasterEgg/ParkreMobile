@@ -4,8 +4,12 @@ import acid.istts.parkremobile.R
 import acid.istts.parkremobile.databinding.ActivityCustomerHomeBinding
 import acid.istts.parkremobile.fragments.customer.*
 import acid.istts.parkremobile.models.Customer
+import acid.istts.parkremobile.services.AppDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CustomerHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCustomerHomeBinding
@@ -28,6 +32,12 @@ class CustomerHomeActivity : AppCompatActivity() {
 
         // get customer
         val customer = intent.getParcelableExtra<Customer>("customer")!!
+
+        val db = AppDatabase.build(this)
+        val ioScope = CoroutineScope(Dispatchers.IO)
+        ioScope.launch {
+            customer.token = db.userDAO.getToken()!!
+        }
 
         startCustomer(customer)
         binding.bottomReserve.setOnClickListener {

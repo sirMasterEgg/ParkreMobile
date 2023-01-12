@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                                     password = customerObj.getString("password"),
                                     phone = customerObj.getString("phone"),
                                     address = customerObj.getString("address"),
-                                    token = customerObj.getString("token")
                                 )
                                 val intent = Intent(this@MainActivity, CustomerHomeActivity::class.java)
                                 intent.putExtra("customer", activeCustomer)

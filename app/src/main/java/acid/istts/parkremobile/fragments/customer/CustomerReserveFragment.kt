@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import android.widget.SearchView
+import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +38,12 @@ class CustomerReserveFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_customer_reserve, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val rvMallSearch = view.findViewById<RecyclerView>(R.id.rvMallSearch)
+        val searchMall = view.findViewById<SearchView>(R.id.searchViewReserve)
     }
 
     companion object {
