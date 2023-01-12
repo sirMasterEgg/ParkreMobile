@@ -2,13 +2,15 @@ package acid.istts.parkremobile.datasources
 
 import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.models.Customer
+import android.content.Context
 import android.util.Log
+import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import java.nio.charset.Charset
 
 class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
     private val ioScope = CoroutineScope(Dispatchers.IO)
@@ -27,9 +29,25 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchCustomers(): List<Customer> {
-        //TODO: fetch customers from API
-        return listOf()
+    override fun fetchCustomers(
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ): List<Customer> {
+        val req = object : StringRequest(Method.GET, BASE_URL + "customer", Response.Listener { response ->
+            onSuccess.invoke(response)
+        }, Response.ErrorListener { error ->
+            onError.invoke(String(error.networkResponse.data, Charsets.UTF_8))
+        }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Content-Type"] = "application/json"
+                return headers
+            }
+        }
+        val queue : RequestQueue = Volley.newRequestQueue(context)
+        queue.add(req)
+        return emptyList()
     }
 
     override suspend fun createCustomer(customer: Customer): Boolean {
