@@ -57,7 +57,7 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
         }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
-                headers["Content-Type"] = "application/json"
+                headers["Accept"] = "application/json"
                 headers["Bypass-Tunnel-Reminder"] = "true"
                 headers["Authorization"] = "Bearer $token"
                 return headers

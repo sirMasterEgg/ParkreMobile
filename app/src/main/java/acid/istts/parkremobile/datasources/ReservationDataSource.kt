@@ -27,8 +27,9 @@ class ReservationDataSource(private val BASE_URL : String) : ReservationDAO {
     override fun fetchReservations(
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit,
-        context: Context
-    ): List<Reservation> {
+        context: Context,
+        token: String
+    ) {
         val req = object : StringRequest(Method.GET, BASE_URL + "staff", Response.Listener {
                 response -> onSuccess.invoke(response)
         }, Response.ErrorListener { error ->
@@ -36,15 +37,15 @@ class ReservationDataSource(private val BASE_URL : String) : ReservationDAO {
         }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
-                headers["Content-Type"] = "application/json"
+                headers["Accept"] = "application/json"
                 headers["Bypass-Tunnel-Reminder"] = "true"
+                headers["Authorization"] = "Bearer $token"
                 return headers
             }
         }
 
         val queue : RequestQueue = Volley.newRequestQueue(context)
         queue.add(req)
-        return emptyList()
     }
 
     override suspend fun getReservation(id: Int): Reservation? {

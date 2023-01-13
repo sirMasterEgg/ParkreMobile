@@ -24,6 +24,9 @@ class StaffHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStaffHomeBinding
     private lateinit var annAdapter: AnnouncementAdapter
     private lateinit var resAdapter: ReservationAdapter
+    val ioScope = CoroutineScope(Dispatchers.IO)
+    val db = AppDatabase.build(this)
+
 
     var annList : ArrayList<Announcement> = ArrayList()
     var resList : ArrayList<Reservation> = ArrayList()
@@ -33,17 +36,10 @@ class StaffHomeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-
-
-//        annList.add(Announcement(1, "Announcement 1", "This is announcement 1", 1, 1, 1, "Mall 1"))
-//        annList.add(Announcement(2, "Announcement 2", "This is announcement 2", 1, 1, 1, "Mall 2"))
-//        annList.add(Announcement(1, "Announcement 3", "This is announcement 3", 1, 1, 1, "Mall 3"))
-//        annList.add(Announcement(1, "Announcement 4", "This is announcement 4", 1, 1, 1, "Mall 4"))
-//
-//        resList.add(Reservation(1, "jam 4", "jam 5", 10, 1, "2023/01/01", 1, 1, 1, "Budi", "L 010 K", "Segment Mall 1"))
-//        resList.add(Reservation(2, "jam 4", "jam 5", 10, 1, "2023/01/01", 1, 1, 1, "Budi 2", "L 010 K", "Segment Mall 1"))
-//        resList.add(Reservation(3, "jam 4", "jam 5", 10, 1, "2023/01/01", 1, 1, 1, "Budi 3", "L 010 K", "Segment Mall 1"))
-//        resList.add(Reservation(4, "jam 4", "jam 5", 10, 1, "2023/01/01", 1, 1, 1, "Budi 4", "L 010 K", "Segment Mall 1"))
+        var token: String? = null
+        runBlocking {
+            token = db.userDAO.getToken()
+        }
 
         annAdapter = AnnouncementAdapter(annList)
         val serviceLocator = ServiceLocator.getInstance()
@@ -67,23 +63,22 @@ class StaffHomeActivity : AppCompatActivity() {
                     annList.add(announcement)
                 }
                 annAdapter.notifyDataSetChanged()
-//                swapToFrag(StaffAnnouncementFragment(annAdapter))
             } else {
                 Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
             }
         }, onError = {
-//            Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
-            Log.e("Announcement Error", it)
+            Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
         },
-            token = getToken()
+            token = token!!
         )
+
+
 
         resAdapter = ReservationAdapter(resList)
         serviceLocator.getReservationRepository().fetchReservations(context = this, onSuccess = {
-            Log.e("test", it)
             val obj = JSONObject(it)
             val status = obj.getString("status")
-            val data = obj.getJSONArray("data")
+            val data = obj.getJSONArray("reservations")
 
             if (status == "success") {
                 for (i in 0 until data.length()) {
@@ -106,14 +101,14 @@ class StaffHomeActivity : AppCompatActivity() {
                     resList.add(reservation)
                 }
                 resAdapter.notifyDataSetChanged()
-//                swapToFrag(StaffHomeFragment(resAdapter))
             } else {
                 Toast.makeText(this, "Failed to fetch reservation", Toast.LENGTH_SHORT).show()
             }
         }, onError = {
-//            Toast.makeText(this, "Failed to fetch reservation", Toast.LENGTH_SHORT).show()
-            Log.e("Reservations Error",it)
-        })
+            Toast.makeText(this, "Failed to fetch reservation", Toast.LENGTH_SHORT).show()
+        },
+            token = token!!
+        )
 
         var drawerLayout = binding.drawerLayout
         var navView = binding.navStaff
@@ -159,12 +154,5 @@ class StaffHomeActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager.beginTransaction()
         fragmentManager.replace(R.id.mainFragment, fragment)
         fragmentManager.commit()
-    }
-
-    suspend fun getToken(): String {
-        val ioScope = CoroutineScope(Dispatchers.IO)
-
-        val db = AppDatabase.build(this)
-        return db.userDAO.getToken()!!
     }
 }

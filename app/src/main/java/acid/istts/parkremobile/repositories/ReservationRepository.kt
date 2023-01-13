@@ -19,9 +19,10 @@ class ReservationRepository(private val reservationDataSource: ReservationDataSo
     override fun fetchReservations(
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit,
-        context: Context
-    ): List<Reservation> {
-        return reservationDataSource.fetchReservations(onSuccess, onError, context)
+        context: Context,
+        token: String
+    ) {
+        return reservationDataSource.fetchReservations(onSuccess, onError, context, token)
     }
 
     override suspend fun getReservation(id: Int): Reservation? {
