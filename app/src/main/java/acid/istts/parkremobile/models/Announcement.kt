@@ -1,5 +1,9 @@
 package acid.istts.parkremobile.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 class Announcement(
     var id: Int,
     var header: String,
@@ -8,6 +12,6 @@ class Announcement(
     var mall_id: Int,
     var staff_id: Int,
     var mall_name: String
-) {
+) : Parcelable{
 
 }

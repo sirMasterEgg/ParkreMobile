@@ -28,7 +28,7 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
         onError: (String) -> Unit,
         context: Context,
     ): List<Announcement> {
-        val req = object : StringRequest(Request.Method.GET, BASE_URL + "announcement", Response.Listener { response ->
+        val req = object : StringRequest(Request.Method.GET, BASE_URL + "staff/announcement", Response.Listener { response ->
             onSuccess.invoke(response)
         }, Response.ErrorListener { error ->
             onError.invoke(String(error.networkResponse.data, Charsets.UTF_8))
@@ -45,12 +45,12 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
     }
 
     override fun fetchAnnouncementByMallId(
-        id: Int,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit,
         context: Context,
+        token: String
     ): List<Announcement> {
-        val req = object : StringRequest(Request.Method.GET, BASE_URL + "announcement/staff/$id", Response.Listener { response ->
+        val req = object : StringRequest(Request.Method.GET, BASE_URL + "staff/announcement", Response.Listener { response ->
             onSuccess.invoke(response)
         }, Response.ErrorListener { error ->
             onError.invoke(String(error.networkResponse.data, Charsets.UTF_8))
@@ -58,6 +58,8 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
                 headers["Content-Type"] = "application/json"
+                headers["Bypass-Tunnel-Reminder"] = "true"
+                headers["Authorization"] = "Bearer $token"
                 return headers
             }
         }

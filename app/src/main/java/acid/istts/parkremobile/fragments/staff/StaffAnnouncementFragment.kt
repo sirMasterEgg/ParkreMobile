@@ -1,4 +1,4 @@
-package acid.istts.parkremobile.activities.staff
+package acid.istts.parkremobile.fragments.staff
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.staff.AnnouncementAdapter
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class AnnouncementFragment(
+class StaffAnnouncementFragment(
     var announcementAdapter: AnnouncementAdapter
 ) : Fragment() {
     lateinit var rvStaffAnnList : RecyclerView
@@ -29,13 +31,16 @@ class AnnouncementFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvStaffAnnList = view.findViewById(R.id.rvStaffAnnList)
+
         rvStaffAnnList.adapter = announcementAdapter
+        rvStaffAnnList.layoutManager = LinearLayoutManager(context)
 
         val btnAdd : Button = view.findViewById(R.id.btnStaffAddAnn)
         btnAdd.setOnClickListener{
             val addAnnFragment = StaffAddAnnouncemenetFragment()
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.mainFragment, addAnnFragment)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
     }

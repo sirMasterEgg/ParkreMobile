@@ -1,12 +1,17 @@
-package acid.istts.parkremobile.activities.staff
+package acid.istts.parkremobile.adapters.staff
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.fragments.staff.StaffAnnouncementDetailFragment
 import acid.istts.parkremobile.models.Announcement
+import acid.istts.parkremobile.models.Transaction
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 
 class AnnouncementAdapter (
@@ -36,7 +41,14 @@ class AnnouncementAdapter (
         fun bind(ann : Announcement) {
             tvHeaderAnnouncement.text = ann.header
             btnDetailAnnouncement.setOnClickListener{
-                // TODO : Open Detail Announcement
+                Log.e("Announcement Click", "${ann.header}, ${ann.content}")
+
+                val activity = it!!.context as AppCompatActivity
+                val fragment = StaffAnnouncementDetailFragment(ann)
+                val transaction : FragmentTransaction = activity.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.mainFragment, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         }
     }

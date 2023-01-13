@@ -1,6 +1,7 @@
 package acid.istts.parkremobile.activities.shared
 
 import acid.istts.parkremobile.activities.customer.CustomerHomeActivity
+import acid.istts.parkremobile.activities.staff.StaffHomeActivity
 import acid.istts.parkremobile.databinding.ActivityLoginBinding
 import acid.istts.parkremobile.models.Customer
 import acid.istts.parkremobile.models.Staff
@@ -9,6 +10,7 @@ import acid.istts.parkremobile.services.AppDatabase
 import acid.istts.parkremobile.services.ServiceLocator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.RequestQueue
@@ -77,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(view.context, "User not Found!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(view.context, "Login Failed!!", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -87,6 +89,8 @@ class LoginActivity : AppCompatActivity() {
             // login as staff or admin
             else{
                 val strReq = serviceLocator.getStaffRepository().login(email, password) {
+//                    Log.e("it", it)
+//                    val staff = null
                     val obj = JSONObject(it)
                     val status = obj.getString("status")
 
@@ -102,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
                             phone = staffObj.getString("phone"),
                             address = staffObj.getString("address"),
                             role_id = staffObj.getInt("role_id"),
-                            role_name = staffObj.getString("role_name"),
+                            role_name = null
                         )
 
                         ioScope.launch {
@@ -111,11 +115,11 @@ class LoginActivity : AppCompatActivity() {
                                     UserEntity(
                                         db_id = staff.id,
                                         token = token,
-                                        role = 1
+                                        role = staff.role_id + 1
                                     )
                                 )
                             } else {
-                                db.userDAO.setValues(staff.id, token, 1)
+                                db.userDAO.setValues(staff.id, token, staff.role_id + 1)
                             }
                         }
 
@@ -123,12 +127,12 @@ class LoginActivity : AppCompatActivity() {
 
                     if (staff != null) {
 //                        TODO: add staff to activity
-                        val intent = Intent(this@LoginActivity, CustomerHomeActivity::class.java)
+                        val intent = Intent(this@LoginActivity, StaffHomeActivity::class.java)
 //                        intent.putExtra("customer", customer)
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(view.context, "User not Found!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(view.context, "Login Failed!!", Toast.LENGTH_SHORT).show()
                     }
                 }
 

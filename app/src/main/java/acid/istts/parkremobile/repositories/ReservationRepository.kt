@@ -3,6 +3,7 @@ package acid.istts.parkremobile.repositories
 import acid.istts.parkremobile.datasources.ReservationDataSource
 import acid.istts.parkremobile.interfaces.ReservationDAO
 import acid.istts.parkremobile.models.Reservation
+import android.content.Context
 
 class ReservationRepository(private val reservationDataSource: ReservationDataSource) : ReservationDAO {
     companion object {
@@ -15,8 +16,12 @@ class ReservationRepository(private val reservationDataSource: ReservationDataSo
         }
     }
 
-    override suspend fun fetchReservations(): List<Reservation> {
-        TODO("Not yet implemented")
+    override fun fetchReservations(
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ): List<Reservation> {
+        return reservationDataSource.fetchReservations(onSuccess, onError, context)
     }
 
     override suspend fun getReservation(id: Int): Reservation? {
