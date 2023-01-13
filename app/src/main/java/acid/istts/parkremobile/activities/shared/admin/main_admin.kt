@@ -1,13 +1,9 @@
 package acid.istts.parkremobile.activities.shared.admin
 
 import acid.istts.parkremobile.R
-import acid.istts.parkremobile.databinding.FragmentMainAdmin1Binding
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.FrameLayout
-import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -26,6 +22,8 @@ class main_admin : AppCompatActivity() {
     lateinit var admin_add_staff : admin_add_staff
     lateinit var admin_add_announcement : admin_add_announcement
     lateinit var admin_add_job : admin_add_job
+    lateinit var framelayoutadmin : FrameLayout
+    lateinit var sidebarview : NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +32,12 @@ class main_admin : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.sidebar_view)
         toolbar = findViewById(R.id.toolbar2)
+        framelayoutadmin = findViewById(R.id.framelayoutadmin)
+        sidebarview = findViewById(R.id.sidebar_view)
         fragment_main_admin1 = main_admin1()
         admin_master_announcement1 = admin_master_announcement1()
         admin_master_customer = admin_master_customer()
+        admin_master_staff = admin_master_staff()
         admin_master_mall = admin_master_mall()
         admin_add_staff = admin_add_staff()
         admin_add_announcement = admin_add_announcement()
@@ -49,14 +50,34 @@ class main_admin : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        sidebarview.setNavigationItemSelectedListener{
+            when(it.itemId) {
+                R.id.sidebar_home->{
+                    gantihalaman()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.sidebar_master_customer->{
+                    gantihalamancustomer()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.sidebar_master_staff->{
+                    gantihalamanstaff()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.sidebar_master_mall->{
+                    gantihalamanmall()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.sidebar_master_announcement->{
+                    gantihalamanannounce()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
 
-        gantihalaman()
-        gantihalamanannounce()
-        gantihalamancustomer()
-        gantihalamanmall()
-        gantihalamanaddstaff()
-        gantihalamanaddannouncement()
-        gantihalamanaddjob()
+        }
+
     }
 
     override fun onBackPressed(){
@@ -70,49 +91,49 @@ class main_admin : AppCompatActivity() {
 
     fun gantihalaman(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,fragment_main_admin1)
+        gantiframe.replace(R.id.framelayoutadmin,fragment_main_admin1)
         gantiframe.commit()
     }
 
     fun gantihalamanannounce(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_master_announcement1)
+        gantiframe.replace(R.id.framelayoutadmin,admin_master_announcement1)
         gantiframe.commit()
     }
 
     fun gantihalamancustomer(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_master_customer)
+        gantiframe.replace(R.id.framelayoutadmin,admin_master_customer)
         gantiframe.commit()
     }
 
     fun gantihalamanmall(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_master_mall)
+        gantiframe.replace(R.id.framelayoutadmin,admin_master_mall)
         gantiframe.commit()
     }
 
     fun gantihalamanstaff(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_master_staff)
+        gantiframe.replace(R.id.framelayoutadmin,admin_master_staff)
         gantiframe.commit()
     }
 
     fun gantihalamanaddstaff(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_add_staff)
+        gantiframe.replace(R.id.framelayoutadmin,admin_add_staff)
         gantiframe.commit()
     }
 
     fun gantihalamanaddannouncement(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_add_announcement)
+        gantiframe.replace(R.id.framelayoutadmin,admin_add_announcement)
         gantiframe.commit()
     }
 
     fun gantihalamanaddjob(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.admin_bagian_main,admin_add_job)
+        gantiframe.replace(R.id.framelayoutadmin,admin_add_job)
         gantiframe.commit()
     }
 

@@ -36,7 +36,7 @@
                 app:navigationIcon="@drawable/ic_menu_sidebar_admin_foreground" />
 
             <FrameLayout
-                android:id="@+id/admin_bagian_main"
+                android:id="@+id/framelayoutadmin"
                 android:layout_width="0dp"
                 android:layout_height="685dp"
                 app:layout_constraintBottom_toBottomOf="parent"
