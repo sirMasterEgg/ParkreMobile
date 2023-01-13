@@ -10,8 +10,8 @@
         android:id="@+id/etAnnHeader"
         android:layout_width="353dp"
         android:layout_height="59dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Announcement Header"
         android:inputType="textPersonName"
@@ -22,21 +22,12 @@
         android:id="@+id/etAnnContent"
         android:layout_width="353dp"
         android:layout_height="251dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="88dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Announcement Content"
         android:inputType="textMultiLine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spListMall"
-        android:layout_width="353dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +36,7 @@
         android:layout_width="353dp"
         android:layout_height="60dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="424dp"
         android:text="Add Announcement"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

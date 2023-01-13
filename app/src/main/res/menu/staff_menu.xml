@@ -9,5 +9,9 @@
             android:id="@+id/menu_announcement"
             android:icon="@drawable/staff_announcement"
             android:title="Announcement" />
+        <item
+                android:id="@+id/menu_logout"
+                android:icon="@drawable/staff_logout"
+                android:title="Logout" />
 
 </menu>

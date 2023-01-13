@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class StaffAnnouncementFragment(
-    var announcementAdapter: AnnouncementAdapter
+    var announcementAdapter: AnnouncementAdapter,
+    var token: String
 ) : Fragment() {
     lateinit var rvStaffAnnList : RecyclerView
 
@@ -37,7 +38,7 @@ class StaffAnnouncementFragment(
 
         val btnAdd : Button = view.findViewById(R.id.btnStaffAddAnn)
         btnAdd.setOnClickListener{
-            val addAnnFragment = StaffAddAnnouncemenetFragment()
+            val addAnnFragment = StaffAddAnnouncemenetFragment(token)
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.mainFragment, addAnnFragment)
             transaction.addToBackStack(null)

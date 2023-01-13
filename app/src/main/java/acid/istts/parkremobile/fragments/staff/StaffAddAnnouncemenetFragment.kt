@@ -10,8 +10,12 @@ import acid.istts.parkremobile.services.ServiceLocator
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
+import kotlinx.coroutines.runBlocking
 
-class StaffAddAnnouncemenetFragment : Fragment() {
+class StaffAddAnnouncemenetFragment(
+    var token : String
+) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,6 @@ class StaffAddAnnouncemenetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val btnBack : Button = view.findViewById(R.id.btnBackAdd)
         val btnAdd : Button = view.findViewById(R.id.btnAddAnnouncement)
-        val spMall : Spinner = view.findViewById(R.id.spListMall)
         val etHeader : EditText = view.findViewById(R.id.etAnnHeader)
         val etContent : EditText = view.findViewById(R.id.etAnnContent)
 
@@ -48,7 +51,15 @@ class StaffAddAnnouncemenetFragment : Fragment() {
             }
 
             if(valid){
-                //TODO : Add Announcement
+                val serviceLocator = ServiceLocator.getInstance()
+                serviceLocator.getAnnouncementRepository().createAnnouncement(header, content, token, onSuccess = {
+                    Toast.makeText(view.context, "Success Add Announcement", Toast.LENGTH_SHORT).show()
+
+                    val supportFragmentManager = activity?.supportFragmentManager
+                    supportFragmentManager?.popBackStackImmediate()
+                }, onError = {
+                    etHeader.error = "Header already exist"
+                }, view.context)
             }
         }
 
