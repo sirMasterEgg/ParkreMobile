@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/bottom_home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_announcements"
+        android:icon="@drawable/ic_baseline_announcement_24"
+        android:title="@string/bottom_search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_holder"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="false"/>
+    <item
+        android:id="@+id/bottom_vehicles"
+        android:icon="@drawable/ic_baseline_directions_car_24"
+        android:title="@string/bottom_vehicles"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/bottom_profile"
+        app:showAsAction="ifRoom" />
+</menu>

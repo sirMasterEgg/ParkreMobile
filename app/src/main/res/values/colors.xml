@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sidebar_admin">#e6e6e6</color>
+    <color name="red">#F82626</color>
     <color name="primary">#E0A82E</color>
+    <color name="bg_base_200">#E6E6E6</color>
+    <color name="bg_base_300">#CFCFCF</color>
 </resources>

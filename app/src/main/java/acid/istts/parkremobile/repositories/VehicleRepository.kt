@@ -3,6 +3,8 @@ package acid.istts.parkremobile.repositories
 import acid.istts.parkremobile.datasources.VehicleDataSource
 import acid.istts.parkremobile.interfaces.VehicleDAO
 import acid.istts.parkremobile.models.Vehicle
+import android.content.Context
+import com.android.volley.VolleyError
 
 class VehicleRepository(private val vehicleDataSource: VehicleDataSource) : VehicleDAO {
     companion object {
@@ -15,8 +17,13 @@ class VehicleRepository(private val vehicleDataSource: VehicleDataSource) : Vehi
         }
     }
 
-    override suspend fun fetchVehicles(customer_id: Int): List<Vehicle> {
-        TODO("Not yet implemented")
+    override fun fetchVehicles(
+        customer_id: Int,
+        onSuccess: (String) -> Unit,
+        onError: (VolleyError) -> Unit,
+        context: Context
+    ): List<Vehicle>? {
+        return vehicleDataSource.fetchVehicles(customer_id, onSuccess, onError, context)
     }
 
     override suspend fun getVehicle(id: Int): Vehicle? {
