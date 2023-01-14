@@ -1,4 +1,4 @@
-package acid.istts.parkremobile.activities.shared.admin
+package acid.istts.parkremobile.fragments.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import acid.istts.parkremobile.R
 import android.widget.Button
 
-class admin_master_staff : Fragment() {
-    lateinit var admin_master_staff : admin_master_staff
+class AdminMasterStaffFragment : Fragment() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        admin_master_staff = admin_master_staff()
+
     }
 
     override fun onCreateView(
@@ -20,7 +20,7 @@ class admin_master_staff : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_master_staff, container, false)
+        return inflater.inflate(R.layout.fragment_admin_master_staff2, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class admin_master_staff : Fragment() {
 
         val addstaff : Button = view.findViewById(R.id.addstaff)
         addstaff.setOnClickListener{
-            val addstf = admin_add_staff()
+            val addstf = AdminAddStaffFragment()
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.framelayoutadmin,addstf)
             transaction.commit()
@@ -36,7 +36,7 @@ class admin_master_staff : Fragment() {
 
         val addjob : Button = view.findViewById(R.id.addjob)
         addjob.setOnClickListener{
-            val addjb = admin_add_job()
+            val addjb = AdminAddJobFragment()
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.framelayoutadmin,addjb)
             transaction.commit()

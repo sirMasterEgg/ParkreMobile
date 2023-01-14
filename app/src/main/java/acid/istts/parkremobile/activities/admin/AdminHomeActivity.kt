@@ -1,6 +1,7 @@
-package acid.istts.parkremobile.activities.shared.admin
+package acid.istts.parkremobile.activities.admin
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.fragments.admin.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -10,38 +11,39 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
-class main_admin : AppCompatActivity() {
+class AdminHomeActivity : AppCompatActivity() {
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var toolbar: Toolbar
-    lateinit var fragment_main_admin1 : main_admin1
-    lateinit var admin_master_announcement1 : admin_master_announcement1
-    lateinit var admin_master_customer : admin_master_customer
-    lateinit var admin_master_mall : admin_master_mall
-    lateinit var admin_master_staff : admin_master_staff
-    lateinit var admin_add_staff : admin_add_staff
-    lateinit var admin_add_announcement : admin_add_announcement
-    lateinit var admin_add_job : admin_add_job
+    lateinit var fragment_main_admin1 : AdminHomeFragment
+    lateinit var admin_master_announcement : AdminMasterAnnouncementFragment
+    lateinit var admin_master_customer : AdminMasterCustomerFragment
+    lateinit var admin_master_mall : AdminMasterMallFragment
+    lateinit var admin_master_staff : AdminMasterStaffFragment
+    lateinit var admin_add_staff : AdminAddStaffFragment
+    lateinit var admin_add_announcement : AdminAddAnnouncementFragment
+    lateinit var admin_add_job : AdminAddJobFragment
     lateinit var framelayoutadmin : FrameLayout
     lateinit var sidebarview : NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_admin)
+        setContentView(R.layout.activity_admin_home)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.sidebar_view)
         toolbar = findViewById(R.id.toolbar2)
         framelayoutadmin = findViewById(R.id.framelayoutadmin)
         sidebarview = findViewById(R.id.sidebar_view)
-        fragment_main_admin1 = main_admin1()
-        admin_master_announcement1 = admin_master_announcement1()
-        admin_master_customer = admin_master_customer()
-        admin_master_staff = admin_master_staff()
-        admin_master_mall = admin_master_mall()
-        admin_add_staff = admin_add_staff()
-        admin_add_announcement = admin_add_announcement()
-        admin_add_job = admin_add_job()
+        fragment_main_admin1 = AdminHomeFragment()
+        admin_master_announcement = AdminMasterAnnouncementFragment()
+        admin_master_customer = AdminMasterCustomerFragment()
+        admin_master_staff = AdminMasterStaffFragment()
+        admin_master_mall = AdminMasterMallFragment()
+        admin_add_staff = AdminAddStaffFragment()
+        admin_add_announcement = AdminAddAnnouncementFragment()
+        admin_add_job = AdminAddJobFragment()
 
         setSupportActionBar(toolbar)
 
@@ -77,9 +79,7 @@ class main_admin : AppCompatActivity() {
             true
 
         }
-
     }
-
     override fun onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -97,7 +97,7 @@ class main_admin : AppCompatActivity() {
 
     fun gantihalamanannounce(){
         val gantiframe = supportFragmentManager.beginTransaction()
-        gantiframe.replace(R.id.framelayoutadmin,admin_master_announcement1)
+        gantiframe.replace(R.id.framelayoutadmin,admin_master_announcement)
         gantiframe.commit()
     }
 
@@ -136,5 +136,4 @@ class main_admin : AppCompatActivity() {
         gantiframe.replace(R.id.framelayoutadmin,admin_add_job)
         gantiframe.commit()
     }
-
 }

@@ -1,4 +1,4 @@
-package acid.istts.parkremobile.activities.shared.admin
+package acid.istts.parkremobile.fragments.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
 
-class admin_master_mall : Fragment() {
-
+class AdminHomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,6 +18,7 @@ class admin_master_mall : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_master_mall, container, false)
+        return inflater.inflate(R.layout.fragment_admin_home, container, false)
     }
+
 }

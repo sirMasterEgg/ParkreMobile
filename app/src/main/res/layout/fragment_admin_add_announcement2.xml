@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.shared.admin.admin_add_announcement">
+    tools:context=".fragments.admin.AdminAddAnnouncementFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,6 +13,10 @@
 
         <TextView
             android:id="@+id/textView9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginTop="8dp"
@@ -20,14 +24,16 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            app:layout_constraintVertical_bias="0.02"
             android:layout_width="390dp"
             android:layout_height="48dp"
             android:background="@drawable/pinggiran"
@@ -35,54 +41,48 @@
             android:hint="Announcement Header"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner"
-            app:layout_constraintVertical_bias="0.02" />
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="170dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="576dp"
-            android:backgroundTint="#000000"
-            android:text="ADD"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.937"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/addannoucementback"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="170dp"
             android:layout_height="70dp"
             android:layout_marginTop="576dp"
             android:backgroundTint="#000000"
-            android:text="BACK"
+            android:text="ADD" />
+
+        <Button
+            android:id="@+id/addannoucementback"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.066"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="170dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="576dp"
+            android:backgroundTint="#000000"
+            android:text="BACK" />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="390dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/pinggiran"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            android:layout_width="390dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/pinggiran" />
 
         <EditText
             android:id="@+id/editTextTextMultiLine"
             android:layout_width="390dp"
             android:layout_height="341dp"
-            android:layout_marginTop="212dp"
+            android:layout_marginTop="208dp"
             android:background="@drawable/pinggiran"
             android:ems="10"
             android:gravity="start|top"

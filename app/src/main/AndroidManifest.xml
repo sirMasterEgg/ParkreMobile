@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,29 +14,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkreMobile"
         tools:targetApi="31">
+
         <activity
-            android:name=".activities.shared.admin.admin_master_announcement"
+            android:name=".fragments.admin.AdminMasterAnnouncementFragment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.shared.admin.admin_master_mall"
+            android:name=".fragments.admin.AdminMasterMallFragment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.shared.admin.admin_master_staff"
+            android:name=".fragments.admin.AdminMasterStaffFragment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.shared.admin.admin_master_customer"
+            android:name=".fragments.admin.AdminMasterCustomerFragment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -56,13 +58,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.shared.admin.main_admin"
+            android:name=".activities.admin.AdminHomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -70,7 +73,6 @@
         <activity
             android:name=".activities.customer.CustomerHomeActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

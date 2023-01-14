@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.shared.admin.main_admin1">
+    tools:context=".fragments.admin.AdminHomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,6 @@
             android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="65dp"
-            android:layout_marginTop="8dp"
             android:text="Home"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -27,20 +26,20 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="horizontal"
-            android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4">
+            android:padding="10dp">
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/sidebar_admin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/sidebar_admin">
+                android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -48,6 +47,7 @@
 
                     <ImageView
                         android:id="@+id/imgusertransactionreport"
+                        app:srcCompat="@drawable/ic_launcher_foreground"
                         android:layout_width="match_parent"
                         android:layout_height="115dp"
                         android:layout_alignParentTop="true"
@@ -55,8 +55,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        app:srcCompat="@drawable/ic_launcher_foreground" />
+                        android:layout_marginBottom="15dp" />
 
                     <TextView
                         android:id="@+id/textViewutr"
@@ -75,11 +74,11 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/sidebar_admin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/sidebar_admin">
+                android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -87,6 +86,7 @@
 
                     <ImageView
                         android:id="@+id/imgprofitreport"
+                        app:srcCompat="@android:drawable/btn_star_big_on"
                         android:layout_width="match_parent"
                         android:layout_height="115dp"
                         android:layout_alignParentStart="true"
@@ -96,8 +96,7 @@
                         android:layout_marginStart="17dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginEnd="13dp"
-                        android:layout_marginBottom="15dp"
-                        app:srcCompat="@android:drawable/btn_star_big_on" />
+                        android:layout_marginBottom="15dp" />
 
                     <TextView
                         android:id="@+id/textViewpr"
@@ -119,21 +118,21 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            android:padding="10dp">
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/sidebar_admin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/sidebar_admin">
+                android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -141,6 +140,7 @@
 
                     <ImageView
                         android:id="@+id/imgcustomerreservationreport"
+                        app:srcCompat="@android:drawable/btn_star"
                         android:layout_width="match_parent"
                         android:layout_height="115dp"
                         android:layout_alignParentTop="true"
@@ -148,8 +148,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="-1dp"
                         android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        app:srcCompat="@android:drawable/btn_star" />
+                        android:layout_marginBottom="15dp" />
 
                     <TextView
                         android:id="@+id/textViewcrr"
@@ -168,11 +167,11 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/sidebar_admin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/sidebar_admin">
+                android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -180,6 +179,7 @@
 
                     <ImageView
                         android:id="@+id/imgsuccesreservationreport"
+                        app:srcCompat="@android:drawable/star_off"
                         android:layout_width="match_parent"
                         android:layout_height="115dp"
                         android:layout_alignParentTop="true"
@@ -187,8 +187,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="1dp"
                         android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        app:srcCompat="@android:drawable/star_off" />
+                        android:layout_marginBottom="15dp" />
 
                     <TextView
                         android:id="@+id/textViewsrr"
@@ -213,8 +212,9 @@
             android:layout_height="200dp"
             android:orientation="horizontal"
             android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            tools:layout_editor_absoluteX="0dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
