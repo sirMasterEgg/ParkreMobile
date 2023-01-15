@@ -3,6 +3,7 @@ package acid.istts.parkremobile.repositories
 import acid.istts.parkremobile.datasources.MallDataSource
 import acid.istts.parkremobile.interfaces.MallDAO
 import acid.istts.parkremobile.models.Mall
+import android.content.Context
 
 class MallRepository(private var mallDataSource: MallDataSource) : MallDAO {
     companion object {
@@ -15,8 +16,12 @@ class MallRepository(private var mallDataSource: MallDataSource) : MallDAO {
         }
     }
 
-    override suspend fun fetchMalls(): List<Mall> {
-        TODO("Not yet implemented")
+    override fun fetchMalls(
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ) {
+        return mallDataSource.fetchMalls(onSuccess, onError, context)
     }
 
     override suspend fun getMall(id: Int): Mall? {
@@ -33,6 +38,15 @@ class MallRepository(private var mallDataSource: MallDataSource) : MallDAO {
 
     override suspend fun deleteMall(id: Int): Boolean {
         TODO("Not yet implemented")
+    }
+
+    override fun getMallAnnouncements(
+        slug: String,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ) {
+        return mallDataSource.getMallAnnouncements(slug, onSuccess, onError, context)
     }
 
 }

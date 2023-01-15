@@ -36,7 +36,7 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
     ): Customer? {
         val request = object : StringRequest(
             Method.GET,
-            "$BASE_URL/customer/$id",
+            "${BASE_URL}customer/$id",
             Response.Listener { response ->
                 onSuccess.invoke(response)
             },
