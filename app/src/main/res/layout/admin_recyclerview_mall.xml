@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/DetailMall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -72,7 +72,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/BlockMall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

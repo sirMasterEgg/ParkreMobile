@@ -1,7 +1,10 @@
 package acid.istts.parkremobile.activities.admin
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.admin.AnnoucementAdapter
+import acid.istts.parkremobile.adapters.staff.AnnouncementAdapter
 import acid.istts.parkremobile.fragments.admin.*
+import acid.istts.parkremobile.models.Announcement
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -24,8 +27,12 @@ class AdminHomeActivity : AppCompatActivity() {
     lateinit var admin_add_staff : AdminAddStaffFragment
     lateinit var admin_add_announcement : AdminAddAnnouncementFragment
     lateinit var admin_add_job : AdminAddJobFragment
+    lateinit var admin_add_mall : AdminAddMallFragment
     lateinit var framelayoutadmin : FrameLayout
     lateinit var sidebarview : NavigationView
+
+    private lateinit var annAdapter: AnnoucementAdapter
+    var annListadmin : ArrayList<Announcement> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +51,7 @@ class AdminHomeActivity : AppCompatActivity() {
         admin_add_staff = AdminAddStaffFragment()
         admin_add_announcement = AdminAddAnnouncementFragment()
         admin_add_job = AdminAddJobFragment()
+        admin_add_mall = AdminAddMallFragment()
 
         setSupportActionBar(toolbar)
 
@@ -79,6 +87,9 @@ class AdminHomeActivity : AppCompatActivity() {
             true
 
         }
+
+
+
     }
     override fun onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -87,7 +98,6 @@ class AdminHomeActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
 
     fun gantihalaman(){
         val gantiframe = supportFragmentManager.beginTransaction()
@@ -134,6 +144,12 @@ class AdminHomeActivity : AppCompatActivity() {
     fun gantihalamanaddjob(){
         val gantiframe = supportFragmentManager.beginTransaction()
         gantiframe.replace(R.id.framelayoutadmin,admin_add_job)
+        gantiframe.commit()
+    }
+
+    fun gantihalamanaddmall(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.framelayoutadmin,admin_add_mall)
         gantiframe.commit()
     }
 }

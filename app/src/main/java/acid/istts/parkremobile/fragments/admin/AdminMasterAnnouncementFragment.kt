@@ -6,14 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.admin.AnnoucementAdapter
+import acid.istts.parkremobile.models.Announcement
 
 import android.widget.Button
+import androidx.recyclerview.widget.RecyclerView
 
-class AdminMasterAnnouncementFragment : Fragment() {
+class AdminMasterAnnouncementFragment(
+
+) : Fragment() {
+
+    val announcements : ArrayList<Announcement> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -34,5 +40,9 @@ class AdminMasterAnnouncementFragment : Fragment() {
             transaction.replace(R.id.framelayoutadmin,addann)
             transaction.commit()
         }
+
+
+        val rvAdminAnnList : RecyclerView = view.findViewById(R.id.rvAdminAnnList)
+        rvAdminAnnList.adapter = AnnoucementAdapter(announcements)
     }
 }

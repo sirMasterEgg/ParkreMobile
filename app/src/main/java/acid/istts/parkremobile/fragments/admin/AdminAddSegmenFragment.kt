@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import acid.istts.parkremobile.R
 import android.widget.Button
 
-class AdminMasterMallFragment : Fragment() {
+class AdminAddSegmenFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,28 +20,18 @@ class AdminMasterMallFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_master_mall, container, false)
+        return inflater.inflate(R.layout.fragment_admin_add_segmen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val addmall : Button = view.findViewById(R.id.addmall)
-        addmall.setOnClickListener{
-            val addmll = AdminAddMallFragment()
+        val addsegmenback : Button = view.findViewById(R.id.addsegmenback)
+        addsegmenback.setOnClickListener{
+            val addsgmtb = AdminMasterMallFragment()
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.framelayoutadmin,addmll)
-            transaction.commit()
-        }
-
-        val addsegmen : Button = view.findViewById(R.id.addsegmen)
-        addsegmen.setOnClickListener{
-            val addsgmt = AdminAddSegmenFragment()
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.framelayoutadmin,addsgmt)
+            transaction.replace(R.id.framelayoutadmin,addsgmtb)
             transaction.commit()
         }
     }
-
-
 }
