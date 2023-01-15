@@ -6,9 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.admin.AnnoucementAdapter
+import acid.istts.parkremobile.adapters.admin.MallAdapter
+import acid.istts.parkremobile.models.Mall
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class AdminMasterMallFragment : Fragment() {
+
+    val dummymall : ArrayList<Mall> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +33,9 @@ class AdminMasterMallFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dummymall.add(Mall(1,"test aja","siapa anna?","jln 1",1,1,1,"test"))
+        dummymall.add(Mall(2,"test aj2a","siapa anna?2","jln 2",2,2,2,"test"))
+
         val addmall : Button = view.findViewById(R.id.addmall)
         addmall.setOnClickListener{
             val addmll = AdminAddMallFragment()
@@ -41,6 +51,11 @@ class AdminMasterMallFragment : Fragment() {
             transaction.replace(R.id.framelayoutadmin,addsgmt)
             transaction.commit()
         }
+
+        val lm = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+        val rvAdminmllList : RecyclerView = view.findViewById(R.id.rvadminmastermall)
+        rvAdminmllList.layoutManager = lm
+        rvAdminmllList.adapter = MallAdapter(dummymall)
     }
 
 

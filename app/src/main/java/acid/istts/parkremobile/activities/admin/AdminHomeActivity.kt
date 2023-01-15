@@ -31,6 +31,9 @@ class AdminHomeActivity : AppCompatActivity() {
     lateinit var framelayoutadmin : FrameLayout
     lateinit var sidebarview : NavigationView
 
+    lateinit var admin_detail_mall : AdminMallDetailFragment
+    lateinit var admin_detail_announcement : AdminAnnouncementDetail
+
     private lateinit var annAdapter: AnnoucementAdapter
     var annListadmin : ArrayList<Announcement> = ArrayList()
 
@@ -52,6 +55,8 @@ class AdminHomeActivity : AppCompatActivity() {
         admin_add_announcement = AdminAddAnnouncementFragment()
         admin_add_job = AdminAddJobFragment()
         admin_add_mall = AdminAddMallFragment()
+        admin_detail_mall = AdminMallDetailFragment()
+        admin_detail_announcement = AdminAnnouncementDetail()
 
         setSupportActionBar(toolbar)
 
@@ -150,6 +155,12 @@ class AdminHomeActivity : AppCompatActivity() {
     fun gantihalamanaddmall(){
         val gantiframe = supportFragmentManager.beginTransaction()
         gantiframe.replace(R.id.framelayoutadmin,admin_add_mall)
+        gantiframe.commit()
+    }
+
+    fun gantihalamandetaiannouncement(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.framelayoutadmin,admin_detail_announcement)
         gantiframe.commit()
     }
 }

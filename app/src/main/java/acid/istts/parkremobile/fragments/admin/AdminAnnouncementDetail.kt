@@ -34,6 +34,16 @@ class AdminAnnouncementDetail : Fragment() {
         BtnAdminBackDetail.setOnClickListener(){
             val supportFragmentManager = activity?.supportFragmentManager
             supportFragmentManager?.popBackStackImmediate()
+
+            BtnAdminBackDetail.setOnClickListener{
+                val detailannback = AdminMasterMallFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.framelayoutadmin,detailannback)
+                transaction.commit()
+            }
+
         }
     }
+
+
 }

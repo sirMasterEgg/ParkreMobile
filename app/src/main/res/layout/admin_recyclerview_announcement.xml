@@ -53,7 +53,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/DetailAnnouncement"
+        android:id="@+id/rvDetailAnnouncement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
