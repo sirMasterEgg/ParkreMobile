@@ -131,18 +131,16 @@ class AdminHomeActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.sidebar_logout->{
-                    ioScope.launch {
-                        db.userDAO.clear()
-                    }
-                    val req = object : StringRequest(
-                        Method.POST, "https://parkre.loca.lt/api/logout", Response.Listener {},
-                        Response.ErrorListener {
-                        println("====================================")
+                    val req = object : StringRequest(Method.POST, "https://parkre.loca.lt/api/logout", Response.Listener {
+                        ioScope.launch {
+                            db.userDAO.clear()
+                        }
+                    },Response.ErrorListener {
                         println(String(it.networkResponse.data, Charsets.UTF_8))
                     }){
                         override fun getHeaders(): MutableMap<String, String> {
                             val headers = HashMap<String, String>()
-                            headers["Authorization"] = token!!
+                            headers["Authorization"] = "Bearer " + token!!
                             headers["Accept"] = "application/json"
                             return headers
                         }
