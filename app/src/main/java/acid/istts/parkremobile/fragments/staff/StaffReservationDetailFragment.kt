@@ -44,8 +44,8 @@ class StaffReservationDetailFragment(
         res_price.text = "Price : ${reservation.price}"
         user_name.text = "User Name : ${reservation.user_name}"
         segmentation_name.text = "Segmentation Name : ${reservation.segmentation_name}"
-//        mall_name.text = "Mall Name : ${reservation.mall_name}"
-        mall_name.text = "Mall Name : <Mall Name>"
+        mall_name.text = "Mall Name : ${reservation.mall_name}"
+//        mall_name.text = "Mall Name : <Mall Name>"
 
         btnBack.setOnClickListener {
             val supportFragmentManager = activity?.supportFragmentManager

@@ -6,9 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.admin.StaffAdapter
+import acid.istts.parkremobile.models.Staff
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class AdminMasterStaffFragment : Fragment() {
+class AdminMasterStaffFragment(
+    var staffAdapter: StaffAdapter
+) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +32,16 @@ class AdminMasterStaffFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val rvStaff : RecyclerView = view.findViewById(R.id.rvMasterStaff)
+        rvStaff.adapter = staffAdapter
+        rvStaff.layoutManager = LinearLayoutManager(context)
+
         val addstaff : Button = view.findViewById(R.id.addstaff)
         addstaff.setOnClickListener{
             val addstf = AdminAddStaffFragment()
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.framelayoutadmin,addstf)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
 
@@ -39,6 +50,7 @@ class AdminMasterStaffFragment : Fragment() {
             val addjb = AdminAddJobFragment()
             val transaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.framelayoutadmin,addjb)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
     }

@@ -26,10 +26,8 @@ class AdminAddJobFragment : Fragment() {
 
         val addjobback : Button = view.findViewById(R.id.addjobback)
         addjobback.setOnClickListener{
-            val addjbb = AdminMasterStaffFragment()
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.framelayoutadmin,addjbb)
-            transaction.commit()
+            val supportFragmentManager = activity?.supportFragmentManager
+                    supportFragmentManager?.popBackStackImmediate()
         }
     }
 }
