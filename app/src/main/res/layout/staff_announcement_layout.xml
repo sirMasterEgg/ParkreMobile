@@ -18,7 +18,7 @@
             android:text="Announcement Header" />
 
         <Button
-            android:id="@+id/btnDetailAnnouncement"
+            android:id="@+id/btnDetailAnnouncementCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

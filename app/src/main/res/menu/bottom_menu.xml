@@ -8,8 +8,8 @@
         android:title="@string/bottom_home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/bottom_search"
-        android:icon="@drawable/ic_baseline_search_24"
+        android:id="@+id/bottom_announcements"
+        android:icon="@drawable/ic_baseline_announcement_24"
         android:title="@string/bottom_search"
         app:showAsAction="ifRoom" />
     <item

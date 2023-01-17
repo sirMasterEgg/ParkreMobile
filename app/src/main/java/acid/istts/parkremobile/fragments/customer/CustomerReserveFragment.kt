@@ -6,11 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.customer.MallAdapter
+import acid.istts.parkremobile.models.Customer
+import acid.istts.parkremobile.models.Mall
+import acid.istts.parkremobile.services.AppDatabase
+import acid.istts.parkremobile.services.ServiceLocator
+import android.widget.SearchView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "customer"
 
 /**
  * A simple [Fragment] subclass.
@@ -19,14 +30,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class CustomerReserveFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var customer: Customer? = null
+    private val malls = ArrayList<Mall>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            customer = it.getParcelable(ARG_PARAM1)
         }
     }
 
@@ -36,6 +46,44 @@ class CustomerReserveFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_customer_reserve, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val rvMallSearch = view.findViewById<RecyclerView>(R.id.rvMallSearch)
+        val searchMall = view.findViewById<SearchView>(R.id.searchViewReserve)
+
+        val adapter = MallAdapter(malls, onItemClickListener = {
+            val customerMallDetail = CustomerMallDetailFragment.newInstance(customer!!, it)
+            parentFragmentManager.beginTransaction().replace(R.id.frameCustomer, customerMallDetail).commit()
+        })
+        val layout = GridLayoutManager(context, 2)
+        rvMallSearch.layoutManager = layout
+        rvMallSearch.adapter = adapter
+
+        val serviceLocator = ServiceLocator.getInstance()
+        serviceLocator.getMallRepository().fetchMalls(context = view.context, onSuccess = {
+            malls.clear()
+            val response = JSONObject(it)
+            val data = response.getJSONArray("data")
+            for (i in 0 until data.length()) {
+                val mall = data.getJSONObject(i)
+                malls.add(Mall(
+                    id = mall.getInt("id"),
+                    name = mall.getString("name"),
+                    slug = mall.getString("slug"),
+                    address = mall.getString("address"),
+                    image_url = if (mall.isNull("image_url")) "" else mall.getString("image_url"),
+                    park_space = mall.getInt("park_space"),
+                    reserve_space = mall.getInt("reserve_space"),
+                    available_space = mall.getInt("park_space") - mall.getInt("reserve_space"),
+                ))
+            }
+            adapter.notifyDataSetChanged()
+        }, onError = {
+
+        })
+
     }
 
     companion object {
@@ -49,11 +97,10 @@ class CustomerReserveFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Customer) =
             CustomerReserveFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(ARG_PARAM1, param1)
                 }
             }
     }

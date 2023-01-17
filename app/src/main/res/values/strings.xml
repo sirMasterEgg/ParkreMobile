@@ -7,7 +7,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="btnOnboarding">Start Now!</string>
     <string name="bottom_home">Home</string>
-    <string name="bottom_search">Search</string>
+    <string name="bottom_search">Announcements</string>
     <string name="bottom_vehicles">My Vehicles</string>
     <string name="bottom_profile">Profile</string>
     <string name="bottom_content_description">Reserve</string>

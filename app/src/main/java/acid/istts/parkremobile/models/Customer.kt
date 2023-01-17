@@ -12,5 +12,7 @@ class Customer(
     var email : String = "",
     var phone : String = "",
     var address : String = "",
+    var token: String = "",
+    var image_url: String? = null
 ) : Parcelable {
 }

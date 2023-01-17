@@ -24,10 +24,10 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/tvSegmentationReservationCard"
+                android:id="@+id/tvPriceReservationCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="On : Segmentation" />
+                android:text="Price" />
 
         </LinearLayout>
 
