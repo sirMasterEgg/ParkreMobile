@@ -26,7 +26,7 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
         onError: (String) -> Unit,
         context: Context,
     ): List<Announcement> {
-        val req = object : StringRequest(Request.Method.GET, BASE_URL + "staff/announcement", Response.Listener { response ->
+        val req = object : StringRequest(Request.Method.GET, BASE_URL + "/staff/announcement", Response.Listener { response ->
             onSuccess.invoke(response)
         }, Response.ErrorListener { error ->
             onError.invoke(String(error.networkResponse.data, Charsets.UTF_8))

@@ -27,6 +27,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/AdminAnnHeader"
             android:layout_width="185dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -35,7 +36,7 @@
             android:textSize="18sp"></TextView>
 
         <Button
-            android:id="@+id/button11"
+            android:id="@+id/AnnouncementApprove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -52,7 +53,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btnDetailMasterCustomer"
+        android:id="@+id/rvDetailAnnouncement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -67,7 +68,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btnBlockMasterCustomer"
+        android:id="@+id/DeleteAnnouncement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

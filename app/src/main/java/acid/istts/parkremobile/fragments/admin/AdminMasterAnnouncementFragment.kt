@@ -6,14 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.admin.AnnoucementAdapter
+import acid.istts.parkremobile.models.Announcement
 
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class AdminMasterAnnouncementFragment : Fragment() {
+class AdminMasterAnnouncementFragment(
+
+) : Fragment() {
+    val dummy : ArrayList<Announcement> = arrayListOf()
+    val announcements : ArrayList<Announcement> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -27,6 +34,10 @@ class AdminMasterAnnouncementFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dummy.add(Announcement(1,"test aja","siapa anna?",1,1,1,"mall anna"))
+        dummy.add(Announcement(2,"test aja2","siapa anna?2",1,1,1,"mall anna"))
+        dummy.add(Announcement(3,"test aja3","siapa anna?3",1,1,1,"mall anna"))
+
         val addannouncement : Button = view.findViewById(R.id.addannouncement)
         addannouncement.setOnClickListener{
             val addann = AdminAddAnnouncementFragment()
@@ -34,5 +45,10 @@ class AdminMasterAnnouncementFragment : Fragment() {
             transaction.replace(R.id.framelayoutadmin,addann)
             transaction.commit()
         }
+
+        val lm = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        val rvAdminAnnList : RecyclerView = view.findViewById(R.id.rvAdminAnnList)
+        rvAdminAnnList.layoutManager = lm
+        rvAdminAnnList.adapter = AnnoucementAdapter(dummy)
     }
 }

@@ -25,14 +25,14 @@ class VehicleDataSource(private val BASE_URL : String) : VehicleDAO {
     }
 
     override fun fetchVehicles(
-        customer_id: Int,
+        customer_token: String,
         onSuccess: (String) -> Unit,
         onError: (VolleyError) -> Unit,
         context: Context
     ): List<Vehicle>? {
         val request = object : StringRequest(
             Method.GET,
-            "$BASE_URL/customer/",
+            "$BASE_URL/customer/vehicle",
             Response.Listener { response ->
                 onSuccess.invoke(response)
             },
@@ -42,6 +42,13 @@ class VehicleDataSource(private val BASE_URL : String) : VehicleDAO {
         ) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Authorization"] = "Bearer $customer_token"
+                return headers
             }
         }
         val queue : RequestQueue = Volley.newRequestQueue(context)
@@ -54,8 +61,47 @@ class VehicleDataSource(private val BASE_URL : String) : VehicleDAO {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createVehicle(vehicle: Vehicle): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun createVehicle(
+        vehicle_name: String,
+        vehicle_plate: String,
+        customer_id: Int,
+        customer_token: String,
+        onSuccess: (String) -> Unit,
+        onError: (VolleyError) -> Unit,
+        context: Context
+    ): Boolean {
+        println("$vehicle_name $vehicle_plate")
+        val request = object : StringRequest(
+            Method.POST,
+            "$BASE_URL/vehicle",
+            Response.Listener { response ->
+                onSuccess.invoke(response)
+            },
+            Response.ErrorListener { error ->
+                onError.invoke(error)
+            }
+        ) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Authorization"] = "Bearer $customer_token"
+                return headers
+            }
+
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["name"] = vehicle_name
+                params["plate"] = vehicle_plate
+                println(params.toString())
+                return params
+            }
+
+
+        }
+        val queue : RequestQueue = Volley.newRequestQueue(context)
+        queue.add(request)
+
+        return true
     }
 
     override suspend fun updateVehicle(vehicle: Vehicle): Boolean {

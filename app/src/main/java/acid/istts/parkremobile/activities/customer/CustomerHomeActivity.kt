@@ -3,6 +3,7 @@ package acid.istts.parkremobile.activities.customer
 import acid.istts.parkremobile.R
 import acid.istts.parkremobile.databinding.ActivityCustomerHomeBinding
 import acid.istts.parkremobile.fragments.customer.*
+import acid.istts.parkremobile.models.Announcement
 import acid.istts.parkremobile.models.Customer
 import acid.istts.parkremobile.services.AppDatabase
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,15 @@ class CustomerHomeActivity : AppCompatActivity() {
 //            "08123456789",
 //            "Random Street 123"
 //        )
+        val announcement = Announcement(
+            1,
+            "Announcement 1",
+            "This is a demo announcement",
+            1,
+            2,
+            21,
+            "tes"
+        )
 
         // get customer
         val customer = intent.getParcelableExtra<Customer>("customer")!!
@@ -42,7 +52,7 @@ class CustomerHomeActivity : AppCompatActivity() {
         startCustomer(customer)
         binding.bottomReserve.setOnClickListener {
             binding.bottomNavigationView.selectedItemId = R.id.bottom_home
-            CustomerReserveFragment.newInstance("tes", "tes").apply {
+            CustomerReserveFragment.newInstance(customer).apply {
                 supportFragmentManager.beginTransaction()
                     .replace(binding.frameCustomer.id, this)
                     .commit()
@@ -61,7 +71,7 @@ class CustomerHomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_announcements -> {
-                    CustomerAnnouncementsFragment.newInstance("tes", "tes").apply {
+                    CustomerAnnouncementsFragment.newInstance().apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
@@ -69,7 +79,7 @@ class CustomerHomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_vehicles -> {
-                    CustomerVehiclesFragment.newInstance(customer, addVehicleListener()).apply {
+                    CustomerVehiclesFragment.newInstance(customer).apply {
                         supportFragmentManager.beginTransaction()
                             .replace(binding.frameCustomer.id, this)
                             .commit()
@@ -87,10 +97,6 @@ class CustomerHomeActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    private fun addVehicleListener(){
-
     }
 
     private fun startCustomer(customer: Customer){

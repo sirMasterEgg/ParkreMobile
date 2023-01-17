@@ -17,22 +17,22 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvAnnouncementTitle"
+                android:id="@+id/tvTitleAnnouncementCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="Announcement Title"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/tvMallAnnouncement"
+                android:id="@+id/tvMallAnnouncementCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="On : Mall" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnDetailAnnouncement"
+            android:id="@+id/btnDetailAnnouncementCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Detail" />

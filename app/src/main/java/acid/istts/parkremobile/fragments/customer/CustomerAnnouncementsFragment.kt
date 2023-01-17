@@ -6,29 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.customer.AnnouncementAdapter
+import acid.istts.parkremobile.models.Announcement
+import acid.istts.parkremobile.services.ServiceLocator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import org.json.JSONArray
+import org.json.JSONObject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CustomerAnnouncementsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CustomerAnnouncementsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,23 +24,51 @@ class CustomerAnnouncementsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_customer_announcements, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CustomerAnnouncementsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CustomerAnnouncementsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val serviceLocator = ServiceLocator.getInstance()
+        val announcements: ArrayList<Announcement> = ArrayList()
+
+        val announcementAdapter = AnnouncementAdapter(announcements,
+            onItemClickListener = {
+                val fragment = CustomerAnnouncementDetailFragment.newInstance(it)
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.frameCustomer, fragment)
+                transaction?.addToBackStack(null)
+                transaction?.commit()
+            })
+        serviceLocator.getAnnouncementRepository().fetchAnnouncement(onSuccess = {
+            val o = JSONObject(it)
+            val obj = o.getJSONArray("announcements")
+            for (i in 0 until obj.length()) {
+                val announcement = Announcement(
+                    id = obj.getJSONObject(i).getInt("id"),
+                    header = obj.getJSONObject(i).getString("header"),
+                    content = obj.getJSONObject(i).getString("content"),
+                    created_at = obj.getJSONObject(i).getString("created_at"),
+                    status = obj.getJSONObject(i).getInt("status"),
+                    mall_id = obj.getJSONObject(i).getInt("mall_id"),
+                    staff_id = obj.getJSONObject(i).getInt("staff_id"),
+                    mall_name = obj.getJSONObject(i).getString("mall_name")
+                )
+                announcements.add(announcement)
+                announcementAdapter.notifyItemInserted(announcements.size - 1)
             }
+        },
+        onError = {
+
+        },
+        context = view.context)
+
+        val rvAnnouncements: RecyclerView = view.findViewById(R.id.rvAnnouncements)
+
+        rvAnnouncements.adapter = announcementAdapter
+        rvAnnouncements.layoutManager = LinearLayoutManager(view.context)
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance() =
+            CustomerAnnouncementsFragment()
     }
 }

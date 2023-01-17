@@ -6,27 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.models.Customer
+import acid.istts.parkremobile.services.ServiceLocator
+import android.content.Context
+import android.widget.EditText
+import android.widget.Toast
+import kotlinx.coroutines.runBlocking
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "customer"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CustomerAddVehicleFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CustomerAddVehicleFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var customer: Customer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            customer = it.getParcelable(ARG_PARAM1)
         }
     }
 
@@ -38,23 +33,49 @@ class CustomerAddVehicleFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_customer_add_vehicle, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val etVehicleName: EditText = view.findViewById(R.id.etNameAddVehicle)
+        val etVehiclePlate: EditText = view.findViewById(R.id.etPlateAddVehicle)
+        val btnAddVehicle: View = view.findViewById(R.id.btnAddVehicle)
+
+        btnAddVehicle.setOnClickListener {
+            if (etVehicleName.text.isEmpty() && etVehiclePlate.text.isEmpty()){
+                Toast.makeText(view.context, "All field is required!", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                runBlocking {
+                    createVehicle(etVehicleName.text.toString(), etVehiclePlate.text.toString(), view.context)
+                }
+                Toast.makeText(view.context, "Vehicle added!", Toast.LENGTH_SHORT).show()
+                parentFragmentManager.popBackStack()
+            }
+        }
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CustomerAddVehicleFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(customer: Customer) =
             CustomerAddVehicleFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(ARG_PARAM1, customer)
                 }
             }
+    }
+
+    private suspend fun createVehicle(vehicle_name: String, vehicle_plate: String, context: Context){
+        val serviceLocator = ServiceLocator.getInstance()
+        serviceLocator.getVehicleRepository().createVehicle(
+            vehicle_name,
+            vehicle_plate,
+            customer!!.id,
+            customer!!.token,
+            onSuccess = {
+                println(it)
+            },
+            onError = {
+                println(String(it.networkResponse.data, Charsets.UTF_8))
+            },
+            context = context
+        )
     }
 }

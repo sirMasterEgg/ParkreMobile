@@ -1,9 +1,15 @@
 package acid.istts.parkremobile.activities.admin
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.activities.shared.LoginActivity
+import acid.istts.parkremobile.adapters.admin.AnnoucementAdapter
+import acid.istts.parkremobile.adapters.staff.AnnouncementAdapter
 import acid.istts.parkremobile.adapters.admin.CustomerAdapter
 import acid.istts.parkremobile.adapters.admin.StaffAdapter
 import acid.istts.parkremobile.fragments.admin.*
+import acid.istts.parkremobile.models.Announcement
+import acid.istts.parkremobile.services.AppDatabase
+import android.content.Intent
 import acid.istts.parkremobile.models.Customer
 import acid.istts.parkremobile.models.Staff
 import androidx.appcompat.app.AppCompatActivity
@@ -13,8 +19,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class AdminHomeActivity : AppCompatActivity() {
 
@@ -29,8 +43,18 @@ class AdminHomeActivity : AppCompatActivity() {
     lateinit var admin_add_staff : AdminAddStaffFragment
     lateinit var admin_add_announcement : AdminAddAnnouncementFragment
     lateinit var admin_add_job : AdminAddJobFragment
+    lateinit var admin_add_mall : AdminAddMallFragment
     lateinit var framelayoutadmin : FrameLayout
     lateinit var sidebarview : NavigationView
+
+    lateinit var admin_detail_mall : AdminMallDetailFragment
+    lateinit var admin_detail_announcement : AdminAnnouncementDetail
+
+    val ioScope = CoroutineScope(Dispatchers.IO)
+    val db = AppDatabase.build(this)
+
+    private lateinit var annAdapter: AnnoucementAdapter
+    var annListadmin : ArrayList<Announcement> = ArrayList()
 
     private lateinit var customerAdapter : CustomerAdapter
     private lateinit var staffAdapter : StaffAdapter
@@ -40,6 +64,11 @@ class AdminHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_home)
+
+        var token: String? = null
+        runBlocking {
+            token = db.userDAO.getToken()
+        }
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.sidebar_view)
@@ -54,6 +83,9 @@ class AdminHomeActivity : AppCompatActivity() {
         admin_add_staff = AdminAddStaffFragment()
         admin_add_announcement = AdminAddAnnouncementFragment()
         admin_add_job = AdminAddJobFragment()
+        admin_add_mall = AdminAddMallFragment()
+        admin_detail_mall = AdminMallDetailFragment()
+        admin_detail_announcement = AdminAnnouncementDetail()
 
         customerList.add(Customer(0, "Customer 1", "pass", "@mail", "1234567890", "address", "city"))
         customerList.add(Customer(1, "Customer 2", "pass", "@mail", "1234567890", "address", "city"))
@@ -101,11 +133,37 @@ class AdminHomeActivity : AppCompatActivity() {
                     gantihalamanannounce()
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
+                R.id.sidebar_logout->{
+                    ioScope.launch {
+                        db.userDAO.clear()
+                    }
+                    val req = object : StringRequest(
+                        Method.POST, "https://parkre.loca.lt/api/logout", Response.Listener {},
+                        Response.ErrorListener {
+                        println("====================================")
+                        println(String(it.networkResponse.data, Charsets.UTF_8))
+                    }){
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Authorization"] = token!!
+                            headers["Accept"] = "application/json"
+                            return headers
+                        }
+                    }
+                    val queue : RequestQueue = Volley.newRequestQueue(this)
+                    queue.add(req)
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
 
         }
+
+
+
     }
     override fun onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -114,7 +172,6 @@ class AdminHomeActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
 
     fun gantihalaman(){
         val gantiframe = supportFragmentManager.beginTransaction()
@@ -167,6 +224,18 @@ class AdminHomeActivity : AppCompatActivity() {
     fun gantihalamanaddjob(){
         val gantiframe = supportFragmentManager.beginTransaction()
         gantiframe.replace(R.id.framelayoutadmin,admin_add_job)
+        gantiframe.commit()
+    }
+
+    fun gantihalamanaddmall(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.framelayoutadmin,admin_add_mall)
+        gantiframe.commit()
+    }
+
+    fun gantihalamandetaiannouncement(){
+        val gantiframe = supportFragmentManager.beginTransaction()
+        gantiframe.replace(R.id.framelayoutadmin,admin_detail_announcement)
         gantiframe.commit()
     }
 }

@@ -20,23 +20,24 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVehicles"
-        android:layout_width="340dp"
-        android:layout_height="431dp"
+        android:layout_width="412dp"
+        android:layout_height="461dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288" />
+        app:layout_constraintVertical_bias="0.359" />
 
     <Button
         android:id="@+id/btnAddVehiclesCustomer"
-        android:layout_width="326dp"
-        android:layout_height="65dp"
+        android:layout_width="362dp"
+        android:layout_height="64dp"
         android:text="Add Vehicle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.869" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,8 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="207dp"
+            android:id="@+id/tvnamamalladmin"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Nama"
@@ -26,28 +27,28 @@
             android:textSize="18sp"></TextView>
 
         <TextView
-            android:id="@+id/tvRVStaffEmail"
+            android:id="@+id/tvphonemalladmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Phone" />
 
         <TextView
-            android:id="@+id/tvRVCustomerPhone"
+            android:id="@+id/tvaddresmalladmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Addres" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/tvparkspaceadmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Park Space : 0" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/tvreservespaceadmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -57,7 +58,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnDetailMasterCustomer"
+        android:id="@+id/DetailMall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -72,7 +73,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btnBlockMasterCustomer"
+        android:id="@+id/BlockMall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
