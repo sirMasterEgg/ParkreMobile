@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
-import acid.istts.parkremobile.activities.staff.AnnouncementAdapter
+import acid.istts.parkremobile.adapters.customer.AnnouncementAdapter
 import acid.istts.parkremobile.models.Announcement
 import acid.istts.parkremobile.models.Customer
 import acid.istts.parkremobile.models.Mall

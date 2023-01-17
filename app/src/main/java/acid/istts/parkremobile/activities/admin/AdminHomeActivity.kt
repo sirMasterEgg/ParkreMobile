@@ -53,9 +53,6 @@ class AdminHomeActivity : AppCompatActivity() {
     val ioScope = CoroutineScope(Dispatchers.IO)
     val db = AppDatabase.build(this)
 
-    private lateinit var annAdapter: AnnoucementAdapter
-    var annListadmin : ArrayList<Announcement> = ArrayList()
-
     private lateinit var customerAdapter : CustomerAdapter
     private lateinit var staffAdapter : StaffAdapter
 

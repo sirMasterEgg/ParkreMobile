@@ -1,6 +1,7 @@
 package acid.istts.parkremobile.activities.shared
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.activities.admin.AdminHomeActivity
 import acid.istts.parkremobile.activities.customer.CustomerHomeActivity
 import acid.istts.parkremobile.activities.staff.StaffHomeActivity
 import acid.istts.parkremobile.databinding.ActivityMainBinding
@@ -14,6 +15,7 @@ import acid.istts.parkremobile.services.ServiceLocator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                             },
                             onError = {
                                 Toast.makeText(this@MainActivity, "Error: $it", Toast.LENGTH_SHORT).show()
+                                Log.e("MainActivity", String(it.networkResponse.data, Charsets.UTF_8))
                             },
                             context = view.context)
                         if (customer != null){
@@ -70,10 +73,33 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     2 ->{
-//                        val admin = serviceLocator.getStaffRepository().getStaff(dbId)
+                        serviceLocator.getStaffRepository().getStaff(
+                            id = dbId,
+                            onSuccess = {
+                                val staffObj = JSONObject(it).getJSONObject("data")
+                                val staff = Staff(
+                                    id = staffObj.getInt("id"),
+                                    name = staffObj.getString("name"),
+                                    username = staffObj.getString("username"),
+                                    password = staffObj.getString("password"),
+                                    address = staffObj.getString("address"),
+                                    phone = staffObj.getString("phone"),
+                                    role_id = staffObj.getInt("role_id"),
+                                    role_name = null
+                                )
+                                val intent = Intent(this@MainActivity, AdminHomeActivity::class.java)
+                                intent.putExtra("admin", staff)
+                                startActivity(intent)
+                                finish()
+                            },
+                            onError = {
+                                Toast.makeText(this@MainActivity, "Error: $it", Toast.LENGTH_SHORT).show()
+                            },
+                            context = view.context
+                        )
                     }
                     3 ->{
-                        val staff = serviceLocator.getStaffRepository().getStaff(
+                        serviceLocator.getStaffRepository().getStaff(
                             id = dbId,
                             onSuccess = {
                                 val staffObj = JSONObject(it).getJSONObject("data")
@@ -97,12 +123,6 @@ class MainActivity : AppCompatActivity() {
                             },
                             context = view.context
                         )
-//                        if(staff != null){
-//                            val intent = Intent(this@MainActivity, StaffHomeActivity::class.java)
-//                            intent.putExtra("staff", staff)
-//                            startActivity(intent)
-//                            finish()
-//                        }
                     }
                 }
             }

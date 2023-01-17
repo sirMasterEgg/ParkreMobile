@@ -1,5 +1,6 @@
 package acid.istts.parkremobile.activities.shared
 
+import acid.istts.parkremobile.activities.admin.AdminHomeActivity
 import acid.istts.parkremobile.activities.customer.CustomerHomeActivity
 import acid.istts.parkremobile.activities.staff.StaffHomeActivity
 import acid.istts.parkremobile.databinding.ActivityLoginBinding
@@ -126,11 +127,15 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     if (staff != null) {
-//                        TODO: add staff to activity
-                        val intent = Intent(this@LoginActivity, StaffHomeActivity::class.java)
-//                        intent.putExtra("customer", customer)
-                        startActivity(intent)
-                        finish()
+                        if (staff.role_id == 2){
+                            val intent = Intent(this@LoginActivity, AdminHomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(this@LoginActivity, StaffHomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                     } else {
                         Toast.makeText(view.context, "Login Failed!!", Toast.LENGTH_SHORT).show()
                     }

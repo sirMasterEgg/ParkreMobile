@@ -45,8 +45,10 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
                 onError.invoke(error)
             }
         ) {
-            override fun getBodyContentType(): String {
-                return "application/json; charset=utf-8"
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
             }
         }
         val queue : RequestQueue = Volley.newRequestQueue(context)

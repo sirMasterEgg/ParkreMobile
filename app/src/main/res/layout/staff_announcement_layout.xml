@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvHeaderAnnouncement"
+            android:id="@+id/tvStaffHeaderAnnouncement"
             android:layout_width="283dp"
             android:layout_height="29dp"
             android:paddingStart="10dp"
@@ -19,7 +19,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnDetailAnnouncement"
+            android:id="@+id/btnStaffDetailAnnouncement"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
