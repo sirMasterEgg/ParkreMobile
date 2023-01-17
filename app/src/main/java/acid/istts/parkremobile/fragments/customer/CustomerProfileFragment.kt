@@ -12,6 +12,10 @@ import acid.istts.parkremobile.services.AppDatabase
 import android.content.Intent
 import android.widget.Button
 import android.widget.ImageView
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -63,9 +67,25 @@ class CustomerProfileFragment : Fragment() {
         }
 
         btnLogout.setOnClickListener {
-            ioScope.launch {
-                db.userDAO.clear()
+            val req = object : StringRequest(
+                Method.POST, "https://parkre.loca.lt/api/logout", Response.Listener {
+                ioScope.launch {
+                    db.userDAO.clear()
+                }
+            },
+                Response.ErrorListener {
+                println(String(it.networkResponse.data, Charsets.UTF_8))
+            }){
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Authorization"] = "Bearer " + customer!!.token
+                    headers["Accept"] = "application/json"
+                    return headers
+                }
             }
+            val queue : RequestQueue = Volley.newRequestQueue(view.context)
+            queue.add(req)
+
             val intent = Intent(activity, LoginActivity::class.java)
             activity?.startActivity(intent)
         }
