@@ -37,7 +37,7 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
     ): Customer? {
         val request = object : StringRequest(
             Method.GET,
-            "$BASE_URL/customer/$id",
+            "${BASE_URL}customer/$id",
             Response.Listener { response ->
                 onSuccess.invoke(response)
             },
@@ -97,7 +97,8 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
                 onSuccess.invoke(it)
             },
             Response.ErrorListener {
-                Log.e("Volley", String(it.networkResponse.data, Charsets.UTF_8))
+//                Log.e("Volley", String(it.networkResponse.data, Charsets.UTF_8))
+                println(String(it.networkResponse.data, Charsets.UTF_8))
             }
         ){
             override fun getParams(): MutableMap<String, String> {

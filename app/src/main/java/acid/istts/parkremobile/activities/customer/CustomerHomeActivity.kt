@@ -52,7 +52,7 @@ class CustomerHomeActivity : AppCompatActivity() {
         startCustomer(customer)
         binding.bottomReserve.setOnClickListener {
             binding.bottomNavigationView.selectedItemId = R.id.bottom_home
-            CustomerReserveFragment.newInstance("tes", "tes").apply {
+            CustomerReserveFragment.newInstance(customer).apply {
                 supportFragmentManager.beginTransaction()
                     .replace(binding.frameCustomer.id, this)
                     .commit()

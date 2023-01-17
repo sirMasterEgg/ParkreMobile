@@ -10,7 +10,7 @@
         android:id="@+id/searchViewReserve"
         android:layout_width="355dp"
         android:layout_height="63dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,11 +19,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMallSearch"
-        android:layout_width="361dp"
-        android:layout_height="505dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.699" />
+        app:layout_constraintVertical_bias="0.497" />
 </androidx.constraintlayout.widget.ConstraintLayout>

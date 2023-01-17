@@ -38,6 +38,7 @@ class CustomerProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val db: AppDatabase = AppDatabase.build(view.context)
         val btnEdit: Button = view.findViewById(R.id.btnEditProfileCustomer)
         val btnTransactions: Button = view.findViewById(R.id.btnReservationsProfileCustomer)
         val btnLogout: Button = view.findViewById(R.id.btnLogoutProfileCustomer)

@@ -26,6 +26,6 @@ interface UserDAO {
     @Query("UPDATE user SET db_id = :db_id, token = :token, role = :role WHERE id = 1")
     suspend fun setValues(db_id: Int, token: String, role: Int): Int
 
-    @Query("UPDATE user SET token = null, role = null WHERE 1")
+    @Query("UPDATE user SET token = null, role = null, db_id = null WHERE 1")
     suspend fun clear(): Int
 }

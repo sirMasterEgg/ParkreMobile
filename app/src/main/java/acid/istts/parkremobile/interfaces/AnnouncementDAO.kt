@@ -10,4 +10,5 @@ interface AnnouncementDAO {
     suspend fun createAnnouncement(announcement: Announcement): Boolean
     suspend fun updateAnnouncement(announcement: Announcement): Boolean
     suspend fun deleteAnnouncement(id: Int): Boolean
+    
 }

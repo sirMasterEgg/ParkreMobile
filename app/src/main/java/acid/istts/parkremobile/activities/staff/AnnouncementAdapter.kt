@@ -16,7 +16,7 @@ class AnnouncementAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val itemView = LayoutInflater.from(parent.context)
         return CustomViewHolder(itemView.inflate(
-            R.layout.staff_announcement_layout, parent ,false
+            R.layout.customer_announcement_card, parent ,false
         ))
     }
 
@@ -30,11 +30,13 @@ class AnnouncementAdapter (
     }
 
     class CustomViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        private val btnDetailAnnouncement : Button = view.findViewById(R.id.btnDetailAnnouncementCard)
-        private val tvHeaderAnnouncement : TextView = view.findViewById(R.id.tvHeaderAnnouncement)
+        private val btnDetailAnnouncement : Button = view.findViewById(R.id.btnDetailAnnouncement)
+        private val tvHeaderAnnouncement : TextView = view.findViewById(R.id.tvAnnouncementTitle)
+        private val tvMallAnnouncement : TextView = view.findViewById(R.id.tvMallAnnouncement)
 
         fun bind(ann : Announcement) {
             tvHeaderAnnouncement.text = ann.header
+            tvMallAnnouncement.text = "On: " + ann.mall_name
             btnDetailAnnouncement.setOnClickListener{
                 // TODO : Open Detail Announcement
             }
