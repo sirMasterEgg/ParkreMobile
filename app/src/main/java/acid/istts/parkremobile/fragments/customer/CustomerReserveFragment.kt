@@ -12,6 +12,7 @@ import acid.istts.parkremobile.models.Mall
 import acid.istts.parkremobile.services.AppDatabase
 import acid.istts.parkremobile.services.ServiceLocator
 import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -52,6 +53,34 @@ class CustomerReserveFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val rvMallSearch = view.findViewById<RecyclerView>(R.id.rvMallSearch)
         val searchMall = view.findViewById<SearchView>(R.id.searchViewReserve)
+
+        searchMall.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = ArrayList<Mall>()
+                if (newText != null) {
+                    for (mall in malls) {
+                        if (mall.name.lowercase().contains(newText.lowercase())) {
+                            filteredList.add(mall)
+                        }
+                    }
+                    rvMallSearch.adapter = MallAdapter(filteredList, onItemClickListener = {
+                        val customerMallDetail = CustomerMallDetailFragment.newInstance(customer!!, it)
+                        parentFragmentManager.beginTransaction().replace(R.id.frameCustomer, customerMallDetail).commit()
+                    })
+                }
+                else {
+                    rvMallSearch.adapter = MallAdapter(malls, onItemClickListener = {
+                        val customerMallDetail = CustomerMallDetailFragment.newInstance(customer!!, it)
+                        parentFragmentManager.beginTransaction().replace(R.id.frameCustomer, customerMallDetail).commit()
+                    })
+                }
+                return true
+            }
+        })
 
         val adapter = MallAdapter(malls, onItemClickListener = {
             val customerMallDetail = CustomerMallDetailFragment.newInstance(customer!!, it)
