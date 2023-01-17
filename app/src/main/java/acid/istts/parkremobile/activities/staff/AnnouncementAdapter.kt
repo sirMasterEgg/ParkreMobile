@@ -30,7 +30,7 @@ class AnnouncementAdapter (
     }
 
     class CustomViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        private val btnDetailAnnouncement : Button = view.findViewById(R.id.btnDetailAnnouncement)
+        private val btnDetailAnnouncement : Button = view.findViewById(R.id.btnDetailAnnouncementCard)
         private val tvHeaderAnnouncement : TextView = view.findViewById(R.id.tvHeaderAnnouncement)
 
         fun bind(ann : Announcement) {

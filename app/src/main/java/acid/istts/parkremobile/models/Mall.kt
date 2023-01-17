@@ -8,6 +8,6 @@ class Mall(
     var park_space: Int,
     var reserve_space: Int,
     var available_space: Int,
-    var image_url: String
+    var image_url: String? = null
 ) {
 }
