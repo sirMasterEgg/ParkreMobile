@@ -4,6 +4,7 @@ import acid.istts.parkremobile.interfaces.AnnouncementDAO
 import acid.istts.parkremobile.models.Announcement
 import android.content.Context
 import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Header
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -47,19 +48,21 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
     }
 
     override fun fetchAnnouncementByMallId(
-        id: Int,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit,
         context: Context,
+        token: String
     ): List<Announcement> {
-        val req = object : StringRequest(Request.Method.GET, BASE_URL + "announcement/staff/$id", Response.Listener { response ->
+        val req = object : StringRequest(Request.Method.GET, BASE_URL + "staff/announcement", Response.Listener { response ->
             onSuccess.invoke(response)
         }, Response.ErrorListener { error ->
             onError.invoke(String(error.networkResponse.data, Charsets.UTF_8))
         }) {
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
-                headers["Content-Type"] = "application/json"
+                headers["Accept"] = "application/json"
+                headers["Bypass-Tunnel-Reminder"] = "true"
+                headers["Authorization"] = "Bearer $token"
                 return headers
             }
         }
@@ -72,8 +75,36 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createAnnouncement(announcement: Announcement): Boolean {
-        TODO("Not yet implemented")
+    override fun createAnnouncement(
+        header: String,
+        content: String,
+        token: String,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ) {
+        val request = object : StringRequest(Request.Method.POST, BASE_URL + "staff/announcement", Response.Listener { response ->
+            onSuccess.invoke(response)
+        }, Response.ErrorListener { error ->
+            onError.invoke(String(error.networkResponse.data, Charsets.UTF_8))
+        }) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                headers["Bypass-Tunnel-Reminder"] = "true"
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
+
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["header"] = header
+                params["content"] = content
+                return params
+            }
+        }
+        val queue : RequestQueue = Volley.newRequestQueue(context)
+        queue.add(request)
     }
 
     override suspend fun updateAnnouncement(announcement: Announcement): Boolean {

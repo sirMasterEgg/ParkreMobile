@@ -1,16 +1,19 @@
-package acid.istts.parkremobile.activities.staff
+package acid.istts.parkremobile.adapters.staff
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.fragments.staff.StaffReservationDetailFragment
 import acid.istts.parkremobile.models.Reservation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 
 class ReservationAdapter (
-var reservationList: ArrayList<Reservation>
+    var reservationList: ArrayList<Reservation>
 ) :  RecyclerView.Adapter<ReservationAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -36,11 +39,16 @@ var reservationList: ArrayList<Reservation>
         private val tvEnd : TextView = view.findViewById(R.id.tvEnd)
 
         fun bind(reservation : Reservation) {
-            tvSegment.text = reservation.segmentation_id.toString()
-            tvStart.text = reservation.start_time
-            tvEnd.text = reservation.end_time
+            tvSegment.text = "Segment : ${reservation.segmentation_name}"
+            tvStart.text = "Start time : ${reservation.start_time}"
+            tvEnd.text = "End time : ${reservation.end_time}"
             btnDetailReservation.setOnClickListener{
-                // TODO : Open Detail Reservation
+                val activity = it!!.context as AppCompatActivity
+                val fragment = StaffReservationDetailFragment(reservation)
+                val transaction : FragmentTransaction = activity.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.mainFragment, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         }
     }

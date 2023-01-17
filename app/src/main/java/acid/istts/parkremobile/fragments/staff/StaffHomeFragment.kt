@@ -1,4 +1,4 @@
-package acid.istts.parkremobile.activities.staff
+package acid.istts.parkremobile.fragments.staff
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.adapters.staff.ReservationAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class HomeFragment(
-    private var reservationAdapter: ReservationAdapter
+class StaffHomeFragment(
+    var reservationAdapter: ReservationAdapter
 ) : Fragment() {
     private lateinit var rvStaffReservation : RecyclerView
 
@@ -28,6 +30,9 @@ class HomeFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvStaffReservation = view.findViewById(R.id.rvStaffReservation)
+
+        val layoutManager = LinearLayoutManager(context)
+        rvStaffReservation.layoutManager = layoutManager
         rvStaffReservation.adapter = reservationAdapter
     }
 }

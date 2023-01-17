@@ -2,11 +2,13 @@ package acid.istts.parkremobile.activities.shared
 
 import acid.istts.parkremobile.R
 import acid.istts.parkremobile.activities.customer.CustomerHomeActivity
+import acid.istts.parkremobile.activities.staff.StaffHomeActivity
 import acid.istts.parkremobile.databinding.ActivityMainBinding
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding1Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding2Fragment
 import acid.istts.parkremobile.fragments.onboarding.OnBoarding3Fragment
 import acid.istts.parkremobile.models.Customer
+import acid.istts.parkremobile.models.Staff
 import acid.istts.parkremobile.services.AppDatabase
 import acid.istts.parkremobile.services.ServiceLocator
 import android.content.Intent
@@ -68,10 +70,39 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     2 ->{
-                        val admin = serviceLocator.getStaffRepository().getStaff(dbId)
+//                        val admin = serviceLocator.getStaffRepository().getStaff(dbId)
                     }
                     3 ->{
-                        val staff = serviceLocator.getStaffRepository().getStaff(dbId)
+                        val staff = serviceLocator.getStaffRepository().getStaff(
+                            id = dbId,
+                            onSuccess = {
+                                val staffObj = JSONObject(it).getJSONObject("data")
+                                val staff = Staff(
+                                    id = staffObj.getInt("id"),
+                                    name = staffObj.getString("name"),
+                                    username = staffObj.getString("username"),
+                                    password = staffObj.getString("password"),
+                                    address = staffObj.getString("address"),
+                                    phone = staffObj.getString("phone"),
+                                    role_id = staffObj.getInt("role_id"),
+                                    role_name = null
+                                )
+                                val intent = Intent(this@MainActivity, StaffHomeActivity::class.java)
+                                intent.putExtra("staff", staff)
+                                startActivity(intent)
+                                finish()
+                            },
+                            onError = {
+                                Toast.makeText(this@MainActivity, "Error: $it", Toast.LENGTH_SHORT).show()
+                            },
+                            context = view.context
+                        )
+//                        if(staff != null){
+//                            val intent = Intent(this@MainActivity, StaffHomeActivity::class.java)
+//                            intent.putExtra("staff", staff)
+//                            startActivity(intent)
+//                            finish()
+//                        }
                     }
                 }
             }

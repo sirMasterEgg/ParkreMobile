@@ -1,22 +1,38 @@
 package acid.istts.parkremobile.activities.staff
 
 import acid.istts.parkremobile.R
+import acid.istts.parkremobile.activities.shared.LoginActivity
+import acid.istts.parkremobile.adapters.staff.AnnouncementAdapter
+import acid.istts.parkremobile.adapters.staff.ReservationAdapter
 import acid.istts.parkremobile.databinding.ActivityStaffHomeBinding
+import acid.istts.parkremobile.fragments.staff.StaffAnnouncementFragment
+import acid.istts.parkremobile.fragments.staff.StaffHomeFragment
 import acid.istts.parkremobile.models.Announcement
 import acid.istts.parkremobile.models.Reservation
+import acid.istts.parkremobile.services.AppDatabase
 import acid.istts.parkremobile.services.ServiceLocator
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.*
 import org.json.JSONObject
 
 class StaffHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStaffHomeBinding
     private lateinit var annAdapter: AnnouncementAdapter
     private lateinit var resAdapter: ReservationAdapter
+    val ioScope = CoroutineScope(Dispatchers.IO)
+    val db = AppDatabase.build(this)
+
 
     var annList : ArrayList<Announcement> = ArrayList()
     var resList : ArrayList<Reservation> = ArrayList()
@@ -26,36 +42,79 @@ class StaffHomeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-       val serviceLocator = ServiceLocator.getInstance()
+        var token: String? = null
+        runBlocking {
+            token = db.userDAO.getToken()
+        }
 
-//        serviceLocator.getAnnouncementRepository().fetchAnnouncementByMallId(0, context = this, onSuccess = {
-//            val obj = JSONObject(it)
-//            val status = obj.getString("status")
-//            val data = obj.getJSONArray("data")
+        annAdapter = AnnouncementAdapter(annList)
+        val serviceLocator = ServiceLocator.getInstance()
 
-//            if (status == "success") {
-//                for (i in 0 until data.length()) {
-//                    val ann = data.getJSONObject(i)
-//                    val id = ann.getInt("id")
-//                    val header = ann.getString("header")
-//                    val content = ann.getString("content")
-//                    val status = ann.getInt("status")
-//                    val mall_id = ann.getInt("mall_id")
-//                    val staff_id = ann.getInt("staff_id")
-//
-//                    val announcement = Announcement(id, header, content, status, mall_id, staff_id)
-//                    annList.add(announcement)
-//                }
-//                annAdapter = AnnouncementAdapter(annList)
-//                swapToFrag(AnnouncementFragment(annAdapter))
-//            } else {
-//                Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
-//            }
-//        }, onError = {
-//            Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
-//        })
+        serviceLocator.getAnnouncementRepository().fetchAnnouncementByMallId(context = this, onSuccess = {
+            val obj = JSONObject(it)
+            val status = obj.getString("status")
+            val data = obj.getJSONArray("announcements")
 
-//        swapToFrag(HomeFragment(resAdapter))
+            if (status == "success") {
+                for (i in 0 until data.length()) {
+                    val ann = data.getJSONObject(i)
+                    val id = ann.getInt("id")
+                    val header = ann.getString("header")
+                    val content = ann.getString("content")
+                    val status = ann.getInt("status")
+                    val mall_id = ann.getInt("mall_id")
+                    val staff_id = ann.getInt("staff_id")
+                    val mall_name = ann.getString("mall_name")
+                    val announcement = Announcement(id, header, content, status, mall_id, staff_id, mall_name)
+                    annList.add(announcement)
+                }
+                annAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
+            }
+        }, onError = {
+            Toast.makeText(this, "Failed to fetch announcement", Toast.LENGTH_SHORT).show()
+        },
+            token = token!!
+        )
+
+
+
+        resAdapter = ReservationAdapter(resList)
+        serviceLocator.getReservationRepository().fetchReservations(context = this, onSuccess = {
+            val obj = JSONObject(it)
+            val status = obj.getString("status")
+            val data = obj.getJSONArray("reservations")
+
+            if (status == "success") {
+                for (i in 0 until data.length()) {
+                    val res = data.getJSONObject(i)
+                    val reservation = Reservation(
+                        id = res.getInt("id"),
+                        start_time = res.getString("start_time"),
+                        end_time = res.getString("end_time"),
+                        price = res.getInt("price"),
+                        status = res.getInt("status"),
+                        date = res.getString("date"),
+                        user_id = res.getInt("user_id"),
+                        vehicle_id = res.getInt("vehicle_id"),
+                        segmentation_id = res.getInt("segmentation_id"),
+                        user_name = res.getString("user_name"),
+                        vehicle_plate = res.getString("vehicle_plate"),
+                        segmentation_name = res.getString("segmentation_name"),
+                        mall_name = res.getString("mall_name")
+                    )
+                    resList.add(reservation)
+                }
+                resAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this, "Failed to fetch reservation", Toast.LENGTH_SHORT).show()
+            }
+        }, onError = {
+            Toast.makeText(this, "Failed to fetch reservation", Toast.LENGTH_SHORT).show()
+        },
+            token = token!!
+        )
 
         var drawerLayout = binding.drawerLayout
         var navView = binding.navStaff
@@ -68,15 +127,42 @@ class StaffHomeActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        swapToFrag(StaffHomeFragment(resAdapter))
+
         binding.navStaff.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.menu_home -> {
-                    swapToFrag(HomeFragment(resAdapter))
+                    resAdapter.notifyDataSetChanged()
+                    swapToFrag(StaffHomeFragment(resAdapter))
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.menu_announcement -> {
-                    swapToFrag(AnnouncementFragment(annAdapter))
+                    annAdapter.notifyDataSetChanged()
+                    swapToFrag(StaffAnnouncementFragment(
+                        annAdapter, token!!))
                     drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.menu_logout -> {
+                    ioScope.launch {
+                        db.userDAO.clear()
+                    }
+                    val req = object : StringRequest(Method.POST, "https://parkre.loca.lt/api/logout", Response.Listener {},Response.ErrorListener {
+                        println("====================================")
+                        println(String(it.networkResponse.data, Charsets.UTF_8))
+                    }){
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Authorization"] = token!!
+                            headers["Accept"] = "application/json"
+                            return headers
+                        }
+                    }
+                    val queue : RequestQueue = Volley.newRequestQueue(this)
+                    queue.add(req)
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+//                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)

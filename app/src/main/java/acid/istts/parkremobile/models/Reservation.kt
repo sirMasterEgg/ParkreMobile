@@ -1,5 +1,9 @@
 package acid.istts.parkremobile.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 class Reservation(
     var id: Int,
     var start_time: String,
@@ -12,6 +16,7 @@ class Reservation(
     var segmentation_id: Int,
     var user_name: String,
     var vehicle_plate: String,
-    var segmentation_name: String
-) {
+    var segmentation_name: String,
+    var mall_name: String
+) : Parcelable {
 }

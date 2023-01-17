@@ -29,16 +29,23 @@ class AnnouncementRepository(private var announcementDataSource: AnnouncementDat
     }
 
     override fun fetchAnnouncementByMallId(
-        id: Int,
         onSuccess: (String) -> Unit,
         onError: (String) -> Unit,
         context: Context,
+        token: String,
     ): List<Announcement> {
-        return announcementDataSource.fetchAnnouncementByMallId(id, onSuccess, onError, context)
+        return announcementDataSource.fetchAnnouncementByMallId(onSuccess, onError, context, token)
     }
 
-    override suspend fun createAnnouncement(announcement: Announcement): Boolean {
-        return announcementDataSource.createAnnouncement(announcement)
+    override fun createAnnouncement(
+        header: String,
+        content: String,
+        token: String,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit,
+        context: Context
+    ) {
+        return announcementDataSource.createAnnouncement(header, content, token, onSuccess, onError, context)
     }
 
     override suspend fun updateAnnouncement(announcement: Announcement): Boolean {
