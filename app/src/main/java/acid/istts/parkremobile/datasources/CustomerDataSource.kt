@@ -4,6 +4,7 @@ import acid.istts.parkremobile.interfaces.CustomerDAO
 import acid.istts.parkremobile.models.Customer
 import android.content.Context
 import android.util.Log
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -36,7 +37,7 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
     ): Customer? {
         val request = object : StringRequest(
             Method.GET,
-            "$BASE_URL/customer/$id",
+            "${BASE_URL}customer/$id",
             Response.Listener { response ->
                 onSuccess.invoke(response)
             },
@@ -49,6 +50,7 @@ class CustomerDataSource(private val BASE_URL : String) : CustomerDAO {
             }
         }
         val queue : RequestQueue = Volley.newRequestQueue(context)
+        request.retryPolicy = DefaultRetryPolicy(10000, 1, 1.0f)
         queue.add(request)
 
         return null

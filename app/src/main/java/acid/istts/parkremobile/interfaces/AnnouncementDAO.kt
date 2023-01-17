@@ -10,4 +10,5 @@ interface AnnouncementDAO {
     fun createAnnouncement(header: String, content: String, token:String, onSuccess: (String) -> Unit, onError: (String) -> Unit, context: Context)
     suspend fun updateAnnouncement(announcement: Announcement): Boolean
     suspend fun deleteAnnouncement(id: Int): Boolean
+    
 }

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class StaffHomeFragment(
     var reservationAdapter: ReservationAdapter
 ) : Fragment() {
-    lateinit var rvStaffReservation : RecyclerView
+    private lateinit var rvStaffReservation : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
