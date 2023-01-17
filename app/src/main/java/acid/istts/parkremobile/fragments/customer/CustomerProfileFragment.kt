@@ -11,6 +11,8 @@ import acid.istts.parkremobile.models.Customer
 import acid.istts.parkremobile.services.AppDatabase
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +22,6 @@ private const val ARG_PARAM1 = "customer"
 class CustomerProfileFragment : Fragment() {
     private var customer: Customer? = null
     private val ioScope = CoroutineScope(Dispatchers.IO)
-    private val db: AppDatabase = AppDatabase.build(view?.context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,10 @@ class CustomerProfileFragment : Fragment() {
         val btnEdit: Button = view.findViewById(R.id.btnEditProfileCustomer)
         val btnTransactions: Button = view.findViewById(R.id.btnReservationsProfileCustomer)
         val btnLogout: Button = view.findViewById(R.id.btnLogoutProfileCustomer)
+        val ivProfile: ImageView = view.findViewById(R.id.ivProfileCustomer)
+
+        val imageUrl = "https://www.w3schools.com/howto/img_avatar.png"
+        Picasso.get().load(imageUrl).into(ivProfile)
 
         btnEdit.setOnClickListener {
             parentFragmentManager.beginTransaction()
