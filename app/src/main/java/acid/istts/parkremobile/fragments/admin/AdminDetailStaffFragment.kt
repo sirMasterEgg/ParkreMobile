@@ -6,32 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import acid.istts.parkremobile.R
-import acid.istts.parkremobile.adapters.admin.CustomerAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
+import acid.istts.parkremobile.adapters.admin.StaffAdapter
+import acid.istts.parkremobile.models.Staff
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdminMasterCustomerFragment(
-    var customerAdapter: CustomerAdapter,
-    var token: String
+class AdminDetailStaffFragment(
+    var staff : Staff
 ) : Fragment() {
-    lateinit var rvCustomerList: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_master_customer2, container, false)
+        return inflater.inflate(R.layout.fragment_admin_detail_staff, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvCustomerList = view.findViewById(R.id.rvMasterCustomer)
-
-        rvCustomerList.adapter = customerAdapter
-        rvCustomerList.layoutManager = LinearLayoutManager(context)
+        val tvName : TextView = view.findViewById(R.id.tvStaffDetailName)
+        val tvUsername : TextView = view.findViewById(R.id.tvStaffDetailUsername)
+        val tvAddress : TextView = view.findViewById(R.id.tvStaffDetailAddress)
+        val tvPhone : TextView = view.findViewById(R.id.tvStaffDetailPhone)
     }
 }

@@ -3,6 +3,7 @@ package acid.istts.parkremobile.datasources
 import acid.istts.parkremobile.interfaces.ReservationDAO
 import acid.istts.parkremobile.models.Reservation
 import android.content.Context
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -45,6 +46,7 @@ class ReservationDataSource(private val BASE_URL : String) : ReservationDAO {
         }
 
         val queue : RequestQueue = Volley.newRequestQueue(context)
+        req.retryPolicy = DefaultRetryPolicy(10000, 1, 1.0f)
         queue.add(req)
     }
 

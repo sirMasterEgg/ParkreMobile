@@ -75,6 +75,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMasterStaff"
             android:layout_width="409dp"
             android:layout_height="540dp"
             android:padding="5dp"

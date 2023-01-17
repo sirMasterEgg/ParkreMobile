@@ -3,10 +3,7 @@ package acid.istts.parkremobile.datasources
 import acid.istts.parkremobile.interfaces.AnnouncementDAO
 import acid.istts.parkremobile.models.Announcement
 import android.content.Context
-import com.android.volley.Header
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.Response
+import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +38,7 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
             }
         }
         val queue : RequestQueue = Volley.newRequestQueue(context)
+        req.retryPolicy = DefaultRetryPolicy(10000, 1, 1.0f)
         queue.add(req)
         return listOf()
     }
@@ -65,6 +63,7 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
             }
         }
         val queue : RequestQueue = Volley.newRequestQueue(context)
+        req.retryPolicy = DefaultRetryPolicy(10000, 1, 1.0f)
         queue.add(req)
         return listOf()
     }
@@ -102,6 +101,7 @@ class AnnouncementDataSource(private val BASE_URL : String) :  AnnouncementDAO {
             }
         }
         val queue : RequestQueue = Volley.newRequestQueue(context)
+        request.retryPolicy = DefaultRetryPolicy(10000, 1, 1.0f)
         queue.add(request)
     }
 
